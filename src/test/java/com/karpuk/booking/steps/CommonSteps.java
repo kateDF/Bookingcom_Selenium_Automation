@@ -3,6 +3,7 @@ package com.karpuk.booking.steps;
 import com.karpuk.booking.components.Header;
 import com.karpuk.booking.driver.DriverSingleton;
 import com.karpuk.booking.pages.MainAccommodationPage;
+import com.karpuk.booking.pages.SearchResultsPage;
 import org.openqa.selenium.WebDriver;
 
 import java.time.LocalDate;
@@ -52,6 +53,16 @@ public class CommonSteps {
     public void clickSearchButton(){
         MainAccommodationPage mainPage = new MainAccommodationPage(driver);
         mainPage.clickSearchButton();
+    }
+
+    public int getNumberOfSearchResults(){
+        SearchResultsPage resultsPage = new SearchResultsPage(driver);
+        return resultsPage.getNumberOfResults();
+    }
+
+    public void selectAvailability(){
+        SearchResultsPage resultsPage = new SearchResultsPage(driver);
+        resultsPage.selectAvailabilityCheckbox();
     }
 
     public boolean setCurrency(String currencyName) {
