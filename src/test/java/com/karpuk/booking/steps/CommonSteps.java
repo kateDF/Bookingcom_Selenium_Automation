@@ -8,6 +8,7 @@ import com.karpuk.booking.pages.SearchResultsPage;
 import org.openqa.selenium.WebDriver;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class CommonSteps {
 
@@ -85,6 +86,16 @@ public class CommonSteps {
     public void selectFreeCancellation(){
         SearchResultsPage resultsPage = new SearchResultsPage(driver);
         resultsPage.selectFreeCancellation();
+    }
+
+    public List<String> getResultsHotelsNames(){
+        SearchResultsPage resultsPage = new SearchResultsPage(driver);
+        return resultsPage.getOnePageListOfHotels();
+    }
+
+    public boolean clickNextResultsPageArrow(){
+        SearchResultsPage resultsPage = new SearchResultsPage(driver);
+        return resultsPage.clickNextResultsPage();
     }
 
     public boolean setCurrency(String currencyName) {
