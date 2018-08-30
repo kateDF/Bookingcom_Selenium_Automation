@@ -1,5 +1,6 @@
 package com.karpuk.booking.steps;
 
+import com.karpuk.booking.components.Header;
 import com.karpuk.booking.driver.DriverSingleton;
 import com.karpuk.booking.pages.MainAccommodationPage;
 import org.openqa.selenium.WebDriver;
@@ -42,13 +43,13 @@ public class CommonSteps {
     }
 
     public boolean setCurrency(String currencyName) {
-        MainAccommodationPage mainPage = new MainAccommodationPage(driver);
-        return mainPage.selectCurrency(currencyName);
+        Header header = new Header(driver);
+        return header.selectCurrency(currencyName);
     }
 
     public boolean setLanguage(String language) {
-        MainAccommodationPage mainPage = new MainAccommodationPage(driver);
-        return mainPage.selectLanguage(language);
+        Header header = new Header(driver);
+        return header.selectLanguage(language);
     }
 
 }
