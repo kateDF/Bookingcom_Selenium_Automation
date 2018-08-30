@@ -67,7 +67,7 @@ public class MainAccommodationPage extends AbstractPage {
         searchButton.click();
     }
 
-    public void selectGuestsInformation(int numberOfRooms, int numberOfAdults, int numberOfChildren){
+    public void selectGuestsInformation(int numberOfRooms, int numberOfAdults, int numberOfChildren) {
         GuestsInformationForm guestsForm = new GuestsInformationForm(driver);
         guestsForm.selectGuestsInformation(numberOfRooms, numberOfAdults, numberOfChildren);
     }

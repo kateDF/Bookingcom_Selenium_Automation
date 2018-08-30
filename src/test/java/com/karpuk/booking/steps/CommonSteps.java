@@ -23,46 +23,56 @@ public class CommonSteps {
         DriverSingleton.closeDriver();
     }
 
-    public MainAccommodationPage openMainPage(){
+    public MainAccommodationPage openMainPage() {
         MainAccommodationPage mainPage = new MainAccommodationPage(driver);
         mainPage.openPage();
         return mainPage;
     }
 
-    public void selectRegion(String regionName){
+    public void selectRegion(String regionName) {
         MainAccommodationPage mainPage = new MainAccommodationPage(driver);
         mainPage.selectRegion(regionName);
     }
 
-    public void selectCheckInDate(LocalDate checkInDate){
+    public void selectCheckInDate(LocalDate checkInDate) {
         MainAccommodationPage mainPage = new MainAccommodationPage(driver);
         mainPage.selectCheckInDate(checkInDate);
     }
 
-    public void selectCheckOutDate(LocalDate checkOutDate){
+    public void selectCheckOutDate(LocalDate checkOutDate) {
         MainAccommodationPage mainPage = new MainAccommodationPage(driver);
         mainPage.selectCheckOutDate(checkOutDate);
     }
 
-    public void selectGuestsInformation(int numberOfRooms, int numberOfAdults, int numberOfChildren){
+    public void selectGuestsInformation(int numberOfRooms, int numberOfAdults, int numberOfChildren) {
         MainAccommodationPage mainPage = new MainAccommodationPage(driver);
         mainPage.openGuestsInformationForm();
         mainPage.selectGuestsInformation(numberOfRooms, numberOfAdults, numberOfChildren);
     }
 
-    public void clickSearchButton(){
+    public void clickSearchButton() {
         MainAccommodationPage mainPage = new MainAccommodationPage(driver);
         mainPage.clickSearchButton();
     }
 
-    public int getNumberOfSearchResults(){
+    public int getNumberOfSearchResults() {
         SearchResultsPage resultsPage = new SearchResultsPage(driver);
         return resultsPage.getNumberOfResults();
     }
 
-    public void selectAvailability(){
+    public void selectAvailability() {
         SearchResultsPage resultsPage = new SearchResultsPage(driver);
         resultsPage.selectAvailabilityCheckbox();
+    }
+
+    public boolean selectStarRating(int starRating) {
+        SearchResultsPage resultsPage = new SearchResultsPage(driver);
+        return resultsPage.selectStarRating(starRating);
+    }
+
+    public boolean selectBudget(int budgetGroupNumber) {
+        SearchResultsPage resultsPage = new SearchResultsPage(driver);
+        return resultsPage.selectBudgetGroup(budgetGroupNumber);
     }
 
     public boolean setCurrency(String currencyName) {
