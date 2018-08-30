@@ -1,5 +1,6 @@
 package com.karpuk.booking.steps;
 
+import com.karpuk.booking.components.GuestsInformationForm;
 import com.karpuk.booking.components.Header;
 import com.karpuk.booking.driver.DriverSingleton;
 import com.karpuk.booking.pages.MainAccommodationPage;
@@ -45,9 +46,15 @@ public class CommonSteps {
     }
 
     public void selectGuestsInformation(int numberOfRooms, int numberOfAdults, int numberOfChildren) {
-        MainAccommodationPage mainPage = new MainAccommodationPage(driver);
-        mainPage.openGuestsInformationForm();
-        mainPage.selectGuestsInformation(numberOfRooms, numberOfAdults, numberOfChildren);
+        GuestsInformationForm guestsForm = new GuestsInformationForm(driver);
+        guestsForm.openGuestForm();
+        guestsForm.selectGuestsInformation(numberOfRooms, numberOfAdults, numberOfChildren);
+    }
+
+    public void selectNumberOfChildren(int numberOfChildren){
+        GuestsInformationForm guestsForm = new GuestsInformationForm(driver);
+        guestsForm.openGuestForm();
+        guestsForm.selectChildren(numberOfChildren);
     }
 
     public void clickSearchButton() {
@@ -73,6 +80,11 @@ public class CommonSteps {
     public boolean selectBudget(int budgetGroupNumber) {
         SearchResultsPage resultsPage = new SearchResultsPage(driver);
         return resultsPage.selectBudgetGroup(budgetGroupNumber);
+    }
+
+    public void selectFreeCancellation(){
+        SearchResultsPage resultsPage = new SearchResultsPage(driver);
+        resultsPage.selectFreeCancellation();
     }
 
     public boolean setCurrency(String currencyName) {

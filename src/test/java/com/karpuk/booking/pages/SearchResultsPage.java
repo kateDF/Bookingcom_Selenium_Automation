@@ -11,17 +11,20 @@ import java.util.List;
 
 public class SearchResultsPage extends AbstractPage {
 
-    private static final String SEARCH_RESULT_HEADER_XPATH = "//div[@data-block-id='heading']//div[@role='heading']/h1";
+    private static final String SEARCH_RESULT_HEADER_XPATH = "//div[@data-block-id='heading']//div[@role='heading']/*";
     private static final String AVAILABILITY_CHECKBOX_XPATH = "//a[@data-id='oos-1']";
     private static final String BUDGET_OPTIONS_XPATH = "//div[@id='filter_price']/div[contains(@class,'filteroptions')]/a[@data-id='pri-%d']";
     private static final String STAR_RATING_OPTIONS_XPATH = "//div[@id='filter_class']/div[contains(@class,'filteroptions')]/a[@data-id='class-%d']";
-
+    private static final String FREE_CANCELLATION_CHECKBOX_XPATH = "//a[@data-id='fc-2']";
 
     @FindBy(xpath = SEARCH_RESULT_HEADER_XPATH)
     private WebElement searchResultText;
 
     @FindBy(xpath = AVAILABILITY_CHECKBOX_XPATH)
     private WebElement availabilityCheckbox;
+
+    @FindBy(xpath = FREE_CANCELLATION_CHECKBOX_XPATH)
+    private WebElement freeCancellationCheckbox;
 
     public SearchResultsPage(WebDriver driver) {
         super(driver);
@@ -36,17 +39,20 @@ public class SearchResultsPage extends AbstractPage {
     public int getNumberOfResults() {
         //TODO: add waiting
         String[] resultArr = searchResultText.getText().split(": ")[1].split(" ");
-        try {
-            return Integer.parseInt(resultArr[0]);
-        } catch (NumberFormatException e) {
-            return Integer.parseInt(resultArr[1]);
+        int resultNumber = 0;
+        for(String word : resultArr){
+            try {
+                resultNumber = Integer.parseInt(word);
+                break;
+            } catch (NumberFormatException e) {
+                continue;
+            }
         }
+        return resultNumber;
     }
 
     public void selectAvailabilityCheckbox() {
-        if (!Boolean.parseBoolean(availabilityCheckbox.getAttribute("aria-checked"))) {
-            availabilityCheckbox.click();
-        }
+        selectCheckbox(availabilityCheckbox);
     }
 
     public boolean selectBudgetGroup(int budgetGroupNumber) {
@@ -67,6 +73,22 @@ public class SearchResultsPage extends AbstractPage {
             return true;
         }
         return false;
+    }
+
+    public void selectFreeCancellation(){
+        selectCheckbox(freeCancellationCheckbox);
+    }
+
+    private void selectCheckbox(WebElement checkbox){
+        if (!Boolean.parseBoolean(checkbox.getAttribute("aria-checked"))) {
+            checkbox.click();
+        }
+    }
+
+    private void deselectCheckbox(WebElement checkbox){
+        if (Boolean.parseBoolean(checkbox.getAttribute("aria-checked"))) {
+            checkbox.click();
+        }
     }
 
 }
