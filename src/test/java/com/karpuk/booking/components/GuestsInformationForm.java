@@ -10,6 +10,7 @@ import javax.swing.*;
 
 public class GuestsInformationForm {
 
+    private static final String GUESTS_FORM_ID = "xp__guests__toggle";
     private static final String SELECT_ROOMS_ID = "no_rooms";
     private static final String SELECT_GROUP_ADULTS_ID = "group_adults";
     private static final String SELECT_GROUP_CHILDREN_ID = "group_children";
@@ -31,15 +32,29 @@ public class GuestsInformationForm {
         PageFactory.initElements(driver, this);
     }
 
-    public void selectGuestsInformation(int numberOfRooms, int numberOfAdults, int numberOfChildren) {
+    public void openGuestForm(){
+        driver.findElement(By.id(GUESTS_FORM_ID)).click();
+    }
+
+    public void selectRooms(int numberOfRooms){
         selectRooms.click();
         selectOptions(SELECT_ROOMS_ID, numberOfRooms);
+    }
 
+    public void selectAdults(int numberOfAdults){
         selectAdults.click();
         selectOptions(SELECT_GROUP_ADULTS_ID, numberOfAdults);
+    }
 
+    public void selectChildren(int numberOfChildren){
         selectChildren.click();
         selectOptions(SELECT_GROUP_CHILDREN_ID, numberOfChildren);
+    }
+
+    public void selectGuestsInformation(int numberOfRooms, int numberOfAdults, int numberOfChildren) {
+        selectRooms(numberOfRooms);
+        selectAdults(numberOfAdults);
+        selectChildren(numberOfChildren);
     }
 
     private void selectOptions(String selectElement, int value) {
