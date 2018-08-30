@@ -1,20 +1,19 @@
 package com.karpuk.booking.tests;
 
 import com.karpuk.booking.steps.CommonSteps;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 
 public abstract class BaseTest {
 
     protected CommonSteps steps;
 
-    @BeforeSuite
+    @BeforeClass
     public void setUpTest() {
         steps = new CommonSteps();
         steps.initDriver();
     }
 
-    @AfterSuite
+    @AfterClass
     public void closeDriver() {
         steps.closeDriver();
     }
