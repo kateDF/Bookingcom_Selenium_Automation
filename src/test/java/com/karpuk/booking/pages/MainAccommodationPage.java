@@ -1,5 +1,6 @@
 package com.karpuk.booking.pages;
 
+import com.karpuk.booking.components.BookingCalendar;
 import com.karpuk.booking.components.GuestsInformationForm;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -7,8 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.security.InvalidParameterException;
-import java.util.List;
+import java.time.LocalDate;
 
 public class MainAccommodationPage extends AbstractPage {
 
@@ -70,6 +70,16 @@ public class MainAccommodationPage extends AbstractPage {
     public void selectGuestsInformation(int numberOfRooms, int numberOfAdults, int numberOfChildren){
         GuestsInformationForm guestsForm = new GuestsInformationForm(driver);
         guestsForm.selectGuestsInformation(numberOfRooms, numberOfAdults, numberOfChildren);
+    }
+
+    public void selectCheckInDate(LocalDate date) {
+        BookingCalendar cl = new BookingCalendar(driver);
+        cl.setDate(date, "checkin");
+    }
+
+    public void selectCheckOutDate(LocalDate date) {
+        BookingCalendar cl = new BookingCalendar(driver);
+        cl.setDate(date, "checkout");
     }
 
 }

@@ -5,6 +5,8 @@ import com.karpuk.booking.driver.DriverSingleton;
 import com.karpuk.booking.pages.MainAccommodationPage;
 import org.openqa.selenium.WebDriver;
 
+import java.time.LocalDate;
+
 public class CommonSteps {
 
     private WebDriver driver;
@@ -29,6 +31,16 @@ public class CommonSteps {
     public void selectRegion(String regionName){
         MainAccommodationPage mainPage = new MainAccommodationPage(driver);
         mainPage.selectRegion(regionName);
+    }
+
+    public void selectCheckInDate(LocalDate checkInDate){
+        MainAccommodationPage mainPage = new MainAccommodationPage(driver);
+        mainPage.selectCheckInDate(checkInDate);
+    }
+
+    public void selectCheckOutDate(LocalDate checkOutDate){
+        MainAccommodationPage mainPage = new MainAccommodationPage(driver);
+        mainPage.selectCheckOutDate(checkOutDate);
     }
 
     public void selectGuestsInformation(int numberOfRooms, int numberOfAdults, int numberOfChildren){
