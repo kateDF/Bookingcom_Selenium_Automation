@@ -1,5 +1,6 @@
 package com.karpuk.booking.pages;
 
+import com.karpuk.booking.components.GuestsInformationForm;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -79,6 +80,11 @@ public class MainAccommodationPage extends AbstractPage {
 
     public void clickSearchButton() {
         searchButton.click();
+    }
+
+    public void selectGuestsInformation(int numberOfRooms, int numberOfAdults, int numberOfChildren){
+        GuestsInformationForm guestsForm = new GuestsInformationForm(driver);
+        guestsForm.selectGuestsInformation(numberOfRooms, numberOfAdults, numberOfChildren);
     }
 
     public boolean selectCurrency(String currencyName) {
