@@ -1,7 +1,6 @@
 package com.karpuk.booking.pages;
 
 import com.karpuk.booking.components.BookingCalendar;
-import com.karpuk.booking.components.GuestsInformationForm;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,10 +8,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class MainAccommodationPage extends AbstractPage {
 
     private static final String BASE_URL = "https://www.booking.com";
+    private static final String FLY_DROPDOWN_CLOSE_XPATH = "//div[contains(@class,'fly-dropdown')]//div[contains(@class,'bicon')]";
 
     private static final String REGION_SEARCH_FIELD_ID = "ss";
     private static final String REGION_OPTION_XPATH = "//ul/li[@role='option']";
@@ -47,6 +48,7 @@ public class MainAccommodationPage extends AbstractPage {
     }
 
     public void selectRegion(String regionName) {
+        regionSearchField.clear();
         regionSearchField.sendKeys(regionName);
         driver.findElement(By.xpath(REGION_OPTION_XPATH)).click();
     }
@@ -67,9 +69,11 @@ public class MainAccommodationPage extends AbstractPage {
         searchButton.click();
     }
 
-    public void selectGuestsInformation(int numberOfRooms, int numberOfAdults, int numberOfChildren) {
-        GuestsInformationForm guestsForm = new GuestsInformationForm(driver);
-        guestsForm.selectGuestsInformation(numberOfRooms, numberOfAdults, numberOfChildren);
+    public void closeFlyDropdown(){
+        List<WebElement> flyDropdownClose = driver.findElements(By.xpath(FLY_DROPDOWN_CLOSE_XPATH));
+        if(!flyDropdownClose.isEmpty()){
+            flyDropdownClose.get(0).click();
+        }
     }
 
     public void selectCheckInDate(LocalDate date) {

@@ -28,7 +28,12 @@ public class CommonSteps {
     public MainAccommodationPage openMainPage() {
         MainAccommodationPage mainPage = new MainAccommodationPage(driver);
         mainPage.openPage();
+        closeFlyDropdown(mainPage);
         return mainPage;
+    }
+
+    public void closeFlyDropdown(MainAccommodationPage mainPage){
+        mainPage.closeFlyDropdown();
     }
 
     public void selectRegion(String regionName) {
