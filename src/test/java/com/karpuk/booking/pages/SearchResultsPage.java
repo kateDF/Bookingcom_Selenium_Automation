@@ -1,5 +1,6 @@
 package com.karpuk.booking.pages;
 
+import com.karpuk.booking.entity.Apartment;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,7 +22,12 @@ public class SearchResultsPage extends AbstractPage {
     private static final String LIST_OF_HOTELS_NAMES_XPATH = "//span[contains(@class,'bicon-direction-arrow')]/following-sibling::span/../../preceding-sibling::*[contains(@class,'sr-hotel__title')]";
     private static final String LIST_PRICES_INFO_FOR_USD_XPATH = "//*[contains(@class,'price')]//b[contains(text(),'US')] |  //div[contains(@class, 'totalPrice')][contains(text(),'US')] | //b[@class='sr_gs_price_total']";
 
-    private static final String MARK_HOTELS_RECOMMENDED_OUTSIDE_ARIA_XPATH = "//div[contains(@class,'distfromdest--highlight')]" ;
+    private static final String RATING_TITLES_XPATH = "//span[@class='review-score-widget__body']/span[@class='review-score-widget__text']";
+    private static final String SCORE_TITLES_XPATH = "//span[@class='review-score-badge']";
+    private static final String LOCATION_XPATH = "//a[contains(@class,'district_link visited_link')]";
+    private static final String HOTEL_FULL_INFO_BUTTON_XPATH = "//a[contains(@class,'b-button_primary')]";
+
+    private static final String MARK_HOTELS_RECOMMENDED_OUTSIDE_ARIA_XPATH = "//div[contains(@class,'distfromdest--highlight')]";
 
     private static final String ARROW_NEXT_RESULTS_PAGE_XPATH = "//li[contains(@class,'bui-pagination__next-arrow')]/a";
     private static final String LOAD_WAIT_SPINNER_XPATH = "//*[@id='b2searchresultsPage']//div[@class='sr-usp-overlay__container']";
@@ -81,17 +87,17 @@ public class SearchResultsPage extends AbstractPage {
         return hotelsNames;
     }
 
-    public List<Integer> getOnePageListOfPricesInUsd(){
+    public List<Integer> getOnePageListOfPricesInUsd() {
         waitLoadEnd();
         List<WebElement> resultsFull = driver.findElements(By.xpath(LIST_PRICES_INFO_FOR_USD_XPATH));
         List<Integer> prices = new ArrayList<>();
-        for(int i = 0; i < resultsFull.size(); i++){
-            if(i >= resultsFull.size()-5){
-                if(!resultsFull.get(i).findElements(By.xpath(MARK_HOTELS_RECOMMENDED_OUTSIDE_ARIA_XPATH)).isEmpty()){
+        for (int i = 0; i < resultsFull.size(); i++) {
+            if (i >= resultsFull.size() - 5) {
+                if (!resultsFull.get(i).findElements(By.xpath(MARK_HOTELS_RECOMMENDED_OUTSIDE_ARIA_XPATH)).isEmpty()) {
                     break;
                 }
             }
-            String[] res= resultsFull.get(i).getText().split("\\$");
+            String[] res = resultsFull.get(i).getText().split("\\$");
             prices.add(Integer.parseInt(res[1].replaceAll(",", "")));
         }
         return prices;
@@ -101,6 +107,35 @@ public class SearchResultsPage extends AbstractPage {
         List<WebElement> nextButton = driver.findElements(By.xpath(ARROW_NEXT_RESULTS_PAGE_XPATH));
         if (!nextButton.isEmpty()) {
             nextButton.get(0).click();
+            return true;
+        }
+        return false;
+    }
+
+    public Apartment getFirstSearchResult() {
+        waitLoadEnd();
+        WebElement result = driver.findElement(By.xpath(LIST_OF_HOTELS_RESULTS_FULL_ELEMENTS));
+        Apartment apartment = new Apartment();
+
+        String name = driver.findElement(By.xpath(LIST_OF_HOTELS_NAMES_WITH_RECOMMENDED_OUTSIDE_XPATH)).getText();
+        apartment.setName(name);
+
+        String rating = result.findElement(By.xpath(RATING_TITLES_XPATH)).getText();
+        apartment.setRating(rating);
+
+        double score = Double.parseDouble(result.findElement(By.xpath(SCORE_TITLES_XPATH)).getText().replaceAll(",", "."));
+        apartment.setScore(score);
+
+        String locationFull = result.findElement(By.xpath(LOCATION_XPATH)).getText();
+        String[] location = locationFull.split("–");
+        apartment.setLocation(location[0]);
+        return apartment;
+    }
+
+    public boolean openFirstResultApartmentDetailsPage(){
+        List<WebElement> buttonList = driver.findElements(By.xpath(HOTEL_FULL_INFO_BUTTON_XPATH));
+        if(!buttonList.isEmpty()){
+            buttonList.get(0).click();
             return true;
         }
         return false;
