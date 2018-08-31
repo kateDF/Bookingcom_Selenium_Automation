@@ -15,7 +15,8 @@ import java.util.List;
 public class SearchResultsPage extends AbstractPage {
 
     private static final String SEARCH_RESULT_HEADER_XPATH = "//div[@data-block-id='heading']//div[@role='heading']/*";
-    private static final String LIST_OF_HOTELS_NAMES_XPATH = "//span[contains(@class,'sr-hotel__name')]";
+    private static final String LIST_OF_HOTELS_NAMES_WITH_RECOMMENDED_OUTSIDE_XPATH = "//span[contains(@class,'sr-hotel__name')]";
+    private static final String LIST_OF_HOTELS_NAMES_XPATH = "//span[contains(@class,'bicon-direction-arrow')]/following-sibling::span/../../preceding-sibling::*[contains(@class,'sr-hotel__title')]";
     private static final String ARROW_NEXT_RESULTS_PAGE_XPATH = "//li[contains(@class,'bui-pagination__next-arrow')]/a";
     private static final String LOAD_WAIT_SPINNER_XPATH = "//*[@id='b2searchresultsPage']//div[@class='sr-usp-overlay__container']";
 

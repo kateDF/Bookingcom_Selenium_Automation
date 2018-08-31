@@ -38,10 +38,10 @@ public class FreeCancellationBookingTest extends BaseTest {
         do {
             actualResultsHotels.addAll(steps.getResultsHotelsNames());
         } while (steps.clickNextResultsPageArrow());
-        int expectedMinNumberOfHotelsFromTitle = steps.getNumberOfSearchResults();
+        int expectedNumberOfHotelsFromTitle = steps.getNumberOfSearchResults();
 
-        Assert.assertTrue(actualResultsHotels.size() >= expectedMinNumberOfHotelsFromTitle,
-                "Expected:" + expectedMinNumberOfHotelsFromTitle + ", Actual:" + actualResultsHotels.size());
+        Assert.assertEquals(actualResultsHotels.size(), expectedNumberOfHotelsFromTitle,
+                "Expected:" + expectedNumberOfHotelsFromTitle + ", Actual:" + actualResultsHotels.size());
     }
 
 }
