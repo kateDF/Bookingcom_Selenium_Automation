@@ -14,8 +14,8 @@ public class SortResultsByPriceTest extends BaseTest {
     private static final String LANGUAGE = "English (US)";
     private static final String REGION = "Minsk";
     private static final int STAR_RATING = 5;
-    private static LocalDate CHECKIN_DATE = LocalDate.now().plusDays(1);
-    private static LocalDate CHECKOUT_DATE = CHECKIN_DATE.plusDays(10);
+    private static final LocalDate CHECKIN_DATE = LocalDate.now().plusDays(1);
+    private static final LocalDate CHECKOUT_DATE = CHECKIN_DATE.plusDays(10);
 
     @BeforeMethod
     public void open() {
