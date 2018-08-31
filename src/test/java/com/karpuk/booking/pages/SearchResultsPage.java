@@ -19,11 +19,12 @@ public class SearchResultsPage extends AbstractPage {
     private static final String ARROW_NEXT_RESULTS_PAGE_XPATH = "//li[contains(@class,'bui-pagination__next-arrow')]/a";
     private static final String LOAD_WAIT_SPINNER_XPATH = "//*[@id='b2searchresultsPage']//div[@class='sr-usp-overlay__container']";
 
-
     private static final String AVAILABILITY_CHECKBOX_XPATH = "//a[@data-id='oos-1']";
     private static final String BUDGET_OPTIONS_XPATH = "//div[@id='filter_price']/div[contains(@class,'filteroptions')]/a[@data-id='pri-%d']";
     private static final String STAR_RATING_OPTIONS_XPATH = "//div[@id='filter_class']/div[contains(@class,'filteroptions')]/a[@data-id='class-%d']";
     private static final String FREE_CANCELLATION_CHECKBOX_XPATH = "//a[@data-id='fc-2']";
+
+    private static final String SORT_BY_PRICE_XPATH = "//li[contains(@class,'sort_price')]/a";
 
     @FindBy(xpath = SEARCH_RESULT_HEADER_XPATH)
     private WebElement searchResultText;
@@ -33,6 +34,9 @@ public class SearchResultsPage extends AbstractPage {
 
     @FindBy(xpath = FREE_CANCELLATION_CHECKBOX_XPATH)
     private WebElement freeCancellationCheckbox;
+
+    @FindBy(xpath = SORT_BY_PRICE_XPATH)
+    private WebElement sortByPriceButton;
 
     public SearchResultsPage(WebDriver driver) {
         super(driver);
@@ -105,6 +109,10 @@ public class SearchResultsPage extends AbstractPage {
 
     public void selectFreeCancellation(){
         selectCheckbox(freeCancellationCheckbox);
+    }
+
+    public void sortLowestPriceFirst(){
+        sortByPriceButton.click();
     }
 
     private void selectCheckbox(WebElement checkbox){

@@ -103,6 +103,11 @@ public class CommonSteps {
         return resultsPage.clickNextResultsPage();
     }
 
+    public void sortLowestPriceFirst(){
+        SearchResultsPage resultsPage = new SearchResultsPage(driver);
+        resultsPage.sortLowestPriceFirst();
+    }
+
     public boolean setCurrency(String currencyName) {
         Header header = new Header(driver);
         return header.selectCurrency(currencyName);
