@@ -15,9 +15,13 @@ public class BookingCalendar {
 
     private static final String FURTHER_MONTH_XPATH = "//*[contains(@class,'c2-button-further')]";
     private static final String DAYS_XPATH = "//table[@class='c2-month-table']/descendant::th[contains(text(), '%s')]/ancestor::table/tbody//span";
+    private static final String MONTHS_XPATH = "//table[@class='c2-month-table']/descendant::th[contains(text(), '%s')]";
 
     @FindBy(xpath = FURTHER_MONTH_XPATH)
     private List<WebElement> furtherMonthLinks;
+
+    @FindBy(xpath = MONTHS_XPATH)
+    private List<WebElement> mothsAndYearTitle;
 
     private WebDriver driver;
 
@@ -26,24 +30,33 @@ public class BookingCalendar {
         PageFactory.initElements(driver, this);
     }
 
-    public void clickNextMonth(String dateType) {
-        if (dateType.equals("checkin")) {
+    public void setDates(LocalDate checkInDate, LocalDate checkOutDate) {
+        int currentYear = LocalDate.now().getYear();
+        // TODO: check year
+        selectCheckInMonth(checkInDate);
+        selectDay(checkInDate);
+        selectCheckOutMonth(checkInDate, checkOutDate);
+        selectDay(checkOutDate);
+    }
+
+    private void selectCheckInMonth(LocalDate checkInDate) {
+        int currentMonth = LocalDate.now().getMonthValue();
+        while (currentMonth != checkInDate.getMonthValue()) {
             furtherMonthLinks.get(0).click();
-        } else if (dateType.equals("checkout")) {
-            furtherMonthLinks.get(1).click();
+            currentMonth++;
         }
     }
 
-    public void setDate(LocalDate date, String dateType) {
-        int currentYear = LocalDate.now().getYear();
-        // TODO: check year
-        int currentMonth = LocalDate.now().getMonthValue();
-        while (currentMonth != date.getMonthValue()) {
-            clickNextMonth(dateType);
+    private void selectCheckOutMonth(LocalDate checkInDate, LocalDate checkOutDate) {
+        int currentMonth = checkInDate.getMonthValue();
+        while (currentMonth != checkOutDate.getMonthValue()) {
+            furtherMonthLinks.get(1).click();
             currentMonth++;
         }
-        String month = date.format(DateTimeFormatter.ofPattern("MMMM", Locale.ENGLISH));
+    }
 
+    private void selectDay(LocalDate date) {
+        String month = date.format(DateTimeFormatter.ofPattern("MMMM", Locale.ENGLISH));
         String fullDaysXpath = String.format(DAYS_XPATH, month);
         List<WebElement> days = driver.findElements(By.xpath(fullDaysXpath));
 

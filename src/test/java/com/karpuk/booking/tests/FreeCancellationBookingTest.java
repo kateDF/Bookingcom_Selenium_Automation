@@ -27,8 +27,7 @@ public class FreeCancellationBookingTest extends BaseTest {
     @Test
     public void availableFreeCancellationWithChildrenTest() {
         steps.selectRegion(REGION);
-        steps.selectCheckInDate(CHECKIN_DATE);
-        steps.selectCheckOutDate(CHECKOUT_DATE);
+        steps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
         steps.selectNumberOfChildren(NUMBER_OF_CHILDREN);
         steps.clickSearchButton();
         steps.selectAvailability();

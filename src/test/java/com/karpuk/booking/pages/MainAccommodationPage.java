@@ -76,14 +76,9 @@ public class MainAccommodationPage extends AbstractPage {
         }
     }
 
-    public void selectCheckInDate(LocalDate date) {
+    public void selectDates(LocalDate checkInDate, LocalDate checkOutDate) {
         BookingCalendar cl = new BookingCalendar(driver);
-        cl.setDate(date, "checkin");
-    }
-
-    public void selectCheckOutDate(LocalDate date) {
-        BookingCalendar cl = new BookingCalendar(driver);
-        cl.setDate(date, "checkout");
+        cl.setDates(checkInDate, checkOutDate);
     }
 
 }

@@ -41,14 +41,9 @@ public class CommonSteps {
         mainPage.selectRegion(regionName);
     }
 
-    public void selectCheckInDate(LocalDate checkInDate) {
+    public void selectDates(LocalDate checkInDate, LocalDate checkOutDate) {
         MainAccommodationPage mainPage = new MainAccommodationPage(driver);
-        mainPage.selectCheckInDate(checkInDate);
-    }
-
-    public void selectCheckOutDate(LocalDate checkOutDate) {
-        MainAccommodationPage mainPage = new MainAccommodationPage(driver);
-        mainPage.selectCheckOutDate(checkOutDate);
+        mainPage.selectDates(checkInDate, checkOutDate);
     }
 
     public void selectGuestsInformation(int numberOfRooms, int numberOfAdults, int numberOfChildren) {
@@ -96,6 +91,12 @@ public class CommonSteps {
     public List<String> getResultsHotelsNames(){
         SearchResultsPage resultsPage = new SearchResultsPage(driver);
         return resultsPage.getOnePageListOfHotels();
+    }
+
+    public List<Integer> getResultsPricesInUsd(){
+        setCurrency("USD");
+        SearchResultsPage resultsPage = new SearchResultsPage(driver);
+        return resultsPage.getOnePageListOfPricesInUsd();
     }
 
     public boolean clickNextResultsPageArrow(){

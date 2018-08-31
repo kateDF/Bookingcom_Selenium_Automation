@@ -25,8 +25,7 @@ public class BookingWithBudgetTest extends BaseTest {
     @Test
     public void availableBookingWithLowBudget() {
         steps.selectRegion(REGION);
-        steps.selectCheckInDate(CHECKIN_DATE);
-        steps.selectCheckOutDate(CHECKOUT_DATE);
+        steps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
         steps.clickSearchButton();
         steps.selectAvailability();
         int availableWithoutBudgetMark = steps.getNumberOfSearchResults();
