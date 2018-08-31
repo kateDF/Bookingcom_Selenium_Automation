@@ -60,9 +60,7 @@ public class SearchResultsPage extends AbstractPage {
     }
 
     public List<String> getOnePageListOfHotels(){
-       new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(LOAD_WAIT_SPINNER_XPATH)));
-
+        waitLoadEnd();
         List<WebElement> results = driver.findElements(By.xpath(LIST_OF_HOTELS_NAMES_XPATH));
 
         List<String> hotelsNames = new ArrayList<>();
@@ -119,6 +117,11 @@ public class SearchResultsPage extends AbstractPage {
         if (Boolean.parseBoolean(checkbox.getAttribute("aria-checked"))) {
             checkbox.click();
         }
+    }
+
+    private void waitLoadEnd(){
+        new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(LOAD_WAIT_SPINNER_XPATH)));
     }
 
 }
