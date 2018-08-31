@@ -31,7 +31,7 @@ public class DetailsApartmentInformationTest extends BaseTest {
         steps.selectAvailability();
         Apartment firstApartmentFromSearchResultPage = steps.getFirstResultApartmentFromSearchPage();
         steps.openAndSwitchToFirstResultDetailsPage();
-        Apartment apartmentFromDetailsPage = steps.getAppartmentFromDetailsPage();
+        Apartment apartmentFromDetailsPage = steps.getApartmentFromDetailsPage();
 
         Assert.assertEquals(firstApartmentFromSearchResultPage.getName(), apartmentFromDetailsPage.getName());
         Assert.assertEquals(firstApartmentFromSearchResultPage.getRating(), apartmentFromDetailsPage.getRating());

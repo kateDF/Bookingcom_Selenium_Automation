@@ -139,7 +139,7 @@ public class CommonSteps {
         driver.switchTo().window(tabs.get(tabs.size()-1));
     }
 
-    public Apartment getAppartmentFromDetailsPage(){
+    public Apartment getApartmentFromDetailsPage(){
         ApartmentDetailsPage detailsPage = new ApartmentDetailsPage(driver);
         return detailsPage.getApartment();
     }
