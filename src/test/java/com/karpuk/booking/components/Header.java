@@ -10,7 +10,8 @@ import java.util.List;
 
 public class Header {
 
-    private static final String CURRENCY_XPATH = "//*[@data-id='currency_selector']/a";
+    private static final String CURRENCY_BUTTON_XPATH = "//*[@data-id='currency_selector']/a";
+    private static final String CURRENCY_VALUE_XPATH = "//*[@data-id='currency_selector']/input";
     private static final String ALL_CURRENCIES_XPATH = "//*[@class='currency_list']/li";
 
     private static final String LANGUAGE_SELECTOR_XPATH = "//*[@data-id='language_selector']/a";
@@ -18,8 +19,11 @@ public class Header {
 
     private WebDriver driver;
 
-    @FindBy(xpath = CURRENCY_XPATH)
+    @FindBy(xpath = CURRENCY_BUTTON_XPATH)
     private WebElement currencyButton;
+
+    @FindBy(xpath = CURRENCY_VALUE_XPATH)
+    private WebElement currencyValue;
 
     @FindBy(xpath = LANGUAGE_SELECTOR_XPATH)
     private WebElement languageButton;
@@ -33,7 +37,7 @@ public class Header {
     }
 
     public boolean selectCurrency(String currencyName) {
-        String actualCurrency = currencyButton.getText();
+        String actualCurrency = currencyValue.getAttribute("value");
         if (!actualCurrency.equals(currencyName.toUpperCase())) {
             currencyButton.click();
             return setCurrency(currencyName);
