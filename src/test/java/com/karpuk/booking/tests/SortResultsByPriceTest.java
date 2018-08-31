@@ -40,7 +40,9 @@ public class SortResultsByPriceTest extends BaseTest {
         } while (steps.clickNextResultsPageArrow());
 
         for (int i = 0; i < pricesList.size() - 1; i++) {
-            Assert.assertTrue(pricesList.get(i) <= pricesList.get(i + 1), "Price " + pricesList.get(i) + "$ shouldn`t be higher than " + pricesList.get(i + 1) + "$");
+            Assert.assertTrue(
+                    pricesList.get(i) <= pricesList.get(i + 1),
+                    "Price " + pricesList.get(i) + "$ shouldn`t be higher than " + pricesList.get(i + 1) + "$");
         }
     }
 
