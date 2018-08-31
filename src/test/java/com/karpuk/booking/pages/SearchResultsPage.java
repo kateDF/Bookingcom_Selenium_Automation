@@ -129,6 +129,7 @@ public class SearchResultsPage extends AbstractPage {
         String locationFull = result.findElement(By.xpath(LOCATION_XPATH)).getText();
         String[] location = locationFull.split("–");
         apartment.setLocation(location[0]);
+
         return apartment;
     }
 

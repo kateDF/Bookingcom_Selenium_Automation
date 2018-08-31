@@ -3,12 +3,16 @@ package com.karpuk.booking.steps;
 import com.karpuk.booking.components.GuestsInformationForm;
 import com.karpuk.booking.components.Header;
 import com.karpuk.booking.driver.DriverSingleton;
+import com.karpuk.booking.entity.Apartment;
+import com.karpuk.booking.pages.ApartmentDetailsPage;
 import com.karpuk.booking.pages.MainAccommodationPage;
 import com.karpuk.booking.pages.SearchResultsPage;
 import org.openqa.selenium.WebDriver;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class CommonSteps {
 
@@ -102,6 +106,30 @@ public class CommonSteps {
     public boolean clickNextResultsPageArrow(){
         SearchResultsPage resultsPage = new SearchResultsPage(driver);
         return resultsPage.clickNextResultsPage();
+    }
+
+    public Apartment getFirstResultApartmentFromSearchPage(){
+        SearchResultsPage resultsPage = new SearchResultsPage(driver);
+        return resultsPage.getFirstSearchResult();
+    }
+
+    public ApartmentDetailsPage openAndSwitchToFirstResultDetailsPage(){
+        SearchResultsPage resultsPage = new SearchResultsPage(driver);
+        if(resultsPage.openFirstResultApartmentDetailsPage()){
+            switchToWindowHandle();
+            return new ApartmentDetailsPage(driver);
+        }
+        return null;
+    }
+
+    public void switchToWindowHandle(){
+        List <String> tabs = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(tabs.size()-1));
+    }
+
+    public Apartment getAppartmentFromDetailsPage(){
+        ApartmentDetailsPage detailsPage = new ApartmentDetailsPage(driver);
+        return detailsPage.getApartment();
     }
 
     public void sortLowestUsdPriceFirst(){
