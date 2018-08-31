@@ -15,8 +15,14 @@ import java.util.List;
 public class SearchResultsPage extends AbstractPage {
 
     private static final String SEARCH_RESULT_HEADER_XPATH = "//div[@data-block-id='heading']//div[@role='heading']/*";
+
+    private static final String LIST_OF_HOTELS_RESULTS_FULL_ELEMENTS = "//div[@id='hotellist_inner']//div[contains(@class,'sr_item_content')]";
     private static final String LIST_OF_HOTELS_NAMES_WITH_RECOMMENDED_OUTSIDE_XPATH = "//span[contains(@class,'sr-hotel__name')]";
     private static final String LIST_OF_HOTELS_NAMES_XPATH = "//span[contains(@class,'bicon-direction-arrow')]/following-sibling::span/../../preceding-sibling::*[contains(@class,'sr-hotel__title')]";
+    private static final String LIST_PRICES_INFO_FOR_USD_XPATH = "//*[contains(@class,'price')]//b[contains(text(),'US')] |  //div[contains(@class, 'totalPrice')][contains(text(),'US')] | //b[@class='sr_gs_price_total']";
+
+    private static final String MARK_HOTELS_RECOMMENDED_OUTSIDE_ARIA_XPATH = "//div[contains(@class,'distfromdest--highlight')]" ;
+
     private static final String ARROW_NEXT_RESULTS_PAGE_XPATH = "//li[contains(@class,'bui-pagination__next-arrow')]/a";
     private static final String LOAD_WAIT_SPINNER_XPATH = "//*[@id='b2searchresultsPage']//div[@class='sr-usp-overlay__container']";
 
@@ -73,6 +79,22 @@ public class SearchResultsPage extends AbstractPage {
             hotelsNames.add(result.getText());
         }
         return hotelsNames;
+    }
+
+    public List<Integer> getOnePageListOfPricesInUsd(){
+        waitLoadEnd();
+        List<WebElement> resultsFull = driver.findElements(By.xpath(LIST_PRICES_INFO_FOR_USD_XPATH));
+        List<Integer> prices = new ArrayList<>();
+        for(int i = 0; i < resultsFull.size(); i++){
+            if(i >= resultsFull.size()-5){
+                if(!resultsFull.get(i).findElements(By.xpath(MARK_HOTELS_RECOMMENDED_OUTSIDE_ARIA_XPATH)).isEmpty()){
+                    break;
+                }
+            }
+            String[] res= resultsFull.get(i).getText().split("\\$");
+            prices.add(Integer.parseInt(res[1].replaceAll(",", "")));
+        }
+        return prices;
     }
 
     public boolean clickNextResultsPage() {

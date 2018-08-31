@@ -104,7 +104,7 @@ public class CommonSteps {
         return resultsPage.clickNextResultsPage();
     }
 
-    public void sortLowestPriceFirst(){
+    public void sortLowestUsdPriceFirst(){
         SearchResultsPage resultsPage = new SearchResultsPage(driver);
         resultsPage.sortLowestPriceFirst();
     }
