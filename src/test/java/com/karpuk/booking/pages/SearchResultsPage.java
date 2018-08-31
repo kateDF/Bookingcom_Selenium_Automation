@@ -52,7 +52,7 @@ public class SearchResultsPage extends AbstractPage {
         waitLoadEnd();
         String[] resultArr = searchResultText.getText().split(": ")[1].split(" ");
         int resultNumber = 0;
-        for(String word : resultArr){
+        for (String word : resultArr) {
             try {
                 resultNumber = Integer.parseInt(word);
                 break;
@@ -63,20 +63,20 @@ public class SearchResultsPage extends AbstractPage {
         return resultNumber;
     }
 
-    public List<String> getOnePageListOfHotels(){
+    public List<String> getOnePageListOfHotels() {
         waitLoadEnd();
         List<WebElement> results = driver.findElements(By.xpath(LIST_OF_HOTELS_NAMES_XPATH));
 
         List<String> hotelsNames = new ArrayList<>();
-        for(WebElement result : results){
+        for (WebElement result : results) {
             hotelsNames.add(result.getText());
         }
         return hotelsNames;
     }
 
-    public boolean clickNextResultsPage(){
-        List <WebElement> nextButton = driver.findElements(By.xpath(ARROW_NEXT_RESULTS_PAGE_XPATH));
-        if(!nextButton.isEmpty()){
+    public boolean clickNextResultsPage() {
+        List<WebElement> nextButton = driver.findElements(By.xpath(ARROW_NEXT_RESULTS_PAGE_XPATH));
+        if (!nextButton.isEmpty()) {
             nextButton.get(0).click();
             return true;
         }
@@ -107,27 +107,27 @@ public class SearchResultsPage extends AbstractPage {
         return false;
     }
 
-    public void selectFreeCancellation(){
+    public void selectFreeCancellation() {
         selectCheckbox(freeCancellationCheckbox);
     }
 
-    public void sortLowestPriceFirst(){
+    public void sortLowestPriceFirst() {
         sortByPriceButton.click();
     }
 
-    private void selectCheckbox(WebElement checkbox){
+    private void selectCheckbox(WebElement checkbox) {
         if (!Boolean.parseBoolean(checkbox.getAttribute("aria-checked"))) {
             checkbox.click();
         }
     }
 
-    private void deselectCheckbox(WebElement checkbox){
+    private void deselectCheckbox(WebElement checkbox) {
         if (Boolean.parseBoolean(checkbox.getAttribute("aria-checked"))) {
             checkbox.click();
         }
     }
 
-    private void waitLoadEnd(){
+    private void waitLoadEnd() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(LOAD_WAIT_SPINNER_XPATH)));
     }
