@@ -45,7 +45,7 @@ public class SearchResultsPage extends AbstractPage {
     }
 
     public int getNumberOfResults() {
-        //TODO: add waiting
+        waitLoadEnd();
         String[] resultArr = searchResultText.getText().split(": ")[1].split(" ");
         int resultNumber = 0;
         for(String word : resultArr){
