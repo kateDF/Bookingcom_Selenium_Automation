@@ -5,8 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
-import javax.swing.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GuestsInformationForm {
 
@@ -37,16 +37,19 @@ public class GuestsInformationForm {
     }
 
     public void selectRooms(int numberOfRooms){
+        waitForClickable(selectRooms);
         selectRooms.click();
         selectOptions(SELECT_ROOMS_ID, numberOfRooms);
     }
 
     public void selectAdults(int numberOfAdults){
+        waitForClickable(selectAdults);
         selectAdults.click();
         selectOptions(SELECT_GROUP_ADULTS_ID, numberOfAdults);
     }
 
     public void selectChildren(int numberOfChildren){
+        waitForClickable(selectChildren);
         selectChildren.click();
         selectOptions(SELECT_GROUP_CHILDREN_ID, numberOfChildren);
     }
@@ -61,5 +64,9 @@ public class GuestsInformationForm {
         driver.findElement(By.xpath(String.format(OPTION_XPATH, selectElement, value))).click();
     }
 
+    private void waitForClickable(WebElement element){
+        new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.elementToBeClickable(element));
+    }
 
 }
