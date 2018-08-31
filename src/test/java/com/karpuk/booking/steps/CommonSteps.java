@@ -103,6 +103,18 @@ public class CommonSteps {
         return resultsPage.getOnePageListOfPricesInUsd();
     }
 
+    public int getFirstResultPriceInUsd() {
+        setCurrency("USD");
+        SearchResultsPage resultsPage = new SearchResultsPage(driver);
+        return resultsPage.getFirstResultPriceInUsd();
+    }
+
+    public int getFirstResultPriceInEuro() {
+        setCurrency("EUR");
+        SearchResultsPage resultsPage = new SearchResultsPage(driver);
+        return resultsPage.getFirstResultPriceInEuro();
+    }
+
     public boolean clickNextResultsPageArrow(){
         SearchResultsPage resultsPage = new SearchResultsPage(driver);
         return resultsPage.clickNextResultsPage();
