@@ -33,14 +33,13 @@ public class MapNavigationTest extends BaseTest {
         steps.navigateToMapFromApartDetailsPage();
         Apartment actualApartment = steps.getApartmentFromCurrentPositionOnMap();
 
-        Assert.assertEquals(actualApartment.getName(), expectedApartment.getName(),
+
+        Assert.assertTrue(actualApartment.getName().contains(expectedApartment.getName()) || expectedApartment.getName().contains(actualApartment.getName()),
                 "Expected name: " + expectedApartment.getName() + ". Actual name: " +  actualApartment.getName());
         Assert.assertEquals(actualApartment.getRating(), expectedApartment.getRating(),
                 "Expected rating: " + expectedApartment.getRating() + ". Actual rating: " +  actualApartment.getRating());
         Assert.assertEquals(actualApartment.getScore(), expectedApartment.getScore(),
                 "Expected score: " + expectedApartment.getScore() + ". Actual score: " +  actualApartment.getScore());
     }
-
-
 
 }
