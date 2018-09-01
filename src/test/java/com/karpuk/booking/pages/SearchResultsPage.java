@@ -78,6 +78,19 @@ public class SearchResultsPage extends AbstractPage {
         return resultNumber;
     }
 
+    public List<String> getOnePageListOfHotelsNew() {
+        waitLoadEnd();
+        List<WebElement> resultsWitnOutsideArea = driver.findElements(By.xpath(LIST_OF_HOTELS_NAMES_WITH_RECOMMENDED_OUTSIDE_XPATH));
+        int numberOfOutsideAria = countApartmentOutsideArea();
+        List<WebElement> results = resultsWitnOutsideArea.subList(0, resultsWitnOutsideArea.size()-1-numberOfOutsideAria);
+
+        List<String> hotelsNames = new ArrayList<>();
+        for (WebElement result : results) {
+            hotelsNames.add(result.getText());
+        }
+        return hotelsNames;
+    }
+
     public List<String> getOnePageListOfHotels() {
         waitLoadEnd();
         List<WebElement> results = driver.findElements(By.xpath(LIST_OF_HOTELS_NAMES_XPATH));
@@ -92,13 +105,10 @@ public class SearchResultsPage extends AbstractPage {
     public List<Integer> getOnePageListOfPricesInUsd() {
         waitLoadEnd();
         List<WebElement> resultsFull = driver.findElements(By.xpath(LIST_PRICES_INFO_FOR_USD_XPATH));
+        int numberOfOutsideAria = countApartmentOutsideArea();
+
         List<Integer> prices = new ArrayList<>();
-        for (int i = 0; i < resultsFull.size(); i++) {
-            if (i >= resultsFull.size() - 5) {
-                if (!resultsFull.get(i).findElements(By.xpath(MARK_HOTELS_RECOMMENDED_OUTSIDE_ARIA_XPATH)).isEmpty()) {
-                    break;
-                }
-            }
+        for (int i = 0; i < resultsFull.size() - numberOfOutsideAria; i++) {
             String[] res = resultsFull.get(i).getText().split("\\$");
             prices.add(Integer.parseInt(res[1].replaceAll("\\D+", "")));
         }
@@ -204,6 +214,10 @@ public class SearchResultsPage extends AbstractPage {
         if (Boolean.parseBoolean(checkbox.getAttribute("aria-checked"))) {
             checkbox.click();
         }
+    }
+
+    private int countApartmentOutsideArea(){
+        return driver.findElements(By.xpath(MARK_HOTELS_RECOMMENDED_OUTSIDE_ARIA_XPATH)).size();
     }
 
     private void waitLoadEnd() {

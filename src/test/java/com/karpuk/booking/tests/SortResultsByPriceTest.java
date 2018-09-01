@@ -24,7 +24,6 @@ public class SortResultsByPriceTest extends BaseTest {
         steps.setLanguage(LANGUAGE);
     }
 
-    // Attention: you should wait for test success (method works not so fast as I want)
     @Test
     public void sortedResultsByLowestUsdPriceFirst() {
         steps.selectRegion(REGION);
@@ -34,7 +33,6 @@ public class SortResultsByPriceTest extends BaseTest {
         steps.selectStarRating(STAR_RATING);
         steps.sortLowestUsdPriceFirst();
         List<Integer> pricesList = new ArrayList<>();
-        //TODO: should work faster
         do {
             pricesList.addAll(steps.getResultsPricesInUsd());
         } while (steps.clickNextResultsPageArrow());
