@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -39,14 +41,18 @@ public class Header {
     public boolean selectCurrency(String currencyName) {
         String actualCurrency = currencyValue.getAttribute("value");
         if (!actualCurrency.equals(currencyName.toUpperCase())) {
-            currencyButton.click();
+            (new WebDriverWait(driver, 10))
+                    .until(ExpectedConditions.elementToBeClickable(currencyButton)).click();
+            // currencyButton.click();
             return setCurrency(currencyName);
         }
         return true;
     }
 
     public boolean selectLanguage(String language) {
-        languageButton.click();
+        (new WebDriverWait(driver, 10))
+                .until(ExpectedConditions.elementToBeClickable(languageButton)).click();
+        //languageButton.click();
         return setLanguage(language);
     }
 

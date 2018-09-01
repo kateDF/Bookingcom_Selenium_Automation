@@ -19,7 +19,7 @@ public class DriverSingleton {
                 System.setProperty(WEBDRIVER_CHROME_DRIVER, System.getenv(WEBDRIVER_CHROME_DRIVER));
             }
             driver = new ChromeDriver();
-            driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+            driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             driver.manage().window().maximize();
         }

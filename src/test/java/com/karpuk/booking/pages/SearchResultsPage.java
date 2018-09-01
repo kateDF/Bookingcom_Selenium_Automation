@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import javax.naming.OperationNotSupportedException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TransferQueue;
 
 public class SearchResultsPage extends AbstractPage {
 
@@ -136,20 +137,23 @@ public class SearchResultsPage extends AbstractPage {
 
     public int getFirstResultPriceInUsd(){
         waitLoadEnd();
-        WebElement firstResultLineWithPrice = driver.findElement(By.xpath(LIST_PRICES_INFO_FOR_USD_XPATH));
+        WebElement firstResultLineWithPrice = (new WebDriverWait(driver, 10))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(LIST_PRICES_INFO_FOR_USD_XPATH)));
         String[] priceResult = firstResultLineWithPrice.getText().split("\\$");
         return Integer.parseInt(priceResult[1].replaceAll(",","."));
     }
 
     public int getFirstResultPriceInEuro(){
         waitLoadEnd();
-        WebElement firstResultLineWithPrice = driver.findElement(By.xpath(LIST_PRICES_INFO_FOR_EURO_XPATH));
+        WebElement firstResultLineWithPrice = (new WebDriverWait(driver, 10))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(LIST_PRICES_INFO_FOR_EURO_XPATH)));
         String[] priceResult = firstResultLineWithPrice.getText().split("\u20ac");
         return Integer.parseInt(priceResult[1].replaceAll("\\D+", ""));
     }
 
 
     public boolean openFirstResultApartmentDetailsPage(){
+        waitLoadEnd();
         List<WebElement> buttonList = driver.findElements(By.xpath(HOTEL_FULL_INFO_BUTTON_XPATH));
         if(!buttonList.isEmpty()){
             buttonList.get(0).click();
