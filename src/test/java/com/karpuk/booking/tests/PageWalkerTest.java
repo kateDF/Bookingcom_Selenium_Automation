@@ -22,6 +22,7 @@ public class PageWalkerTest extends BaseTest {
         steps.openMainPage();
         steps.setCurrency(CURRENCY);
         steps.setLanguage(LANGUAGE);
+        logger.info("MainPage opened. Set currency and language");
     }
 
     @Test
@@ -30,8 +31,9 @@ public class PageWalkerTest extends BaseTest {
         steps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
         steps.selectNumberOfChildren(NUMBER_OF_CHILDREN);
         steps.clickSearchButton();
-        steps.selectAvailability();
+        logger.info("Start searching...");
 
+        steps.selectAvailability();
         List<String> actualResultsHotels = new ArrayList<>();
         do {
             actualResultsHotels.addAll(steps.getResultsHotelsNames());
@@ -40,6 +42,7 @@ public class PageWalkerTest extends BaseTest {
 
         Assert.assertEquals(actualResultsHotels.size(), expectedNumberOfHotelsFromTitle,
                 "Expected:" + expectedNumberOfHotelsFromTitle + ", Actual:" + actualResultsHotels.size());
+        logger.info("Test finished");
     }
 
 }

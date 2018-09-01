@@ -24,6 +24,7 @@ public class CurrencyConversionTest extends BaseTest {
         steps.setCurrency(CURRENCY_USD);
         steps.setLanguage(LANGUAGE);
         currencyExchangeClient = new CurrencyExchangeClient();
+        logger.info("MainPage opened. Set currency and language");
     }
 
     @Test
@@ -31,6 +32,8 @@ public class CurrencyConversionTest extends BaseTest {
         steps.selectRegion(REGION);
         steps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
         steps.clickSearchButton();
+        logger.info("Start searching...");
+
         steps.selectAvailability();
         int originalPriceInUsd = steps.getFirstResultPriceInUsd();
         int actualPriceInEuro = steps.getFirstResultPriceInEuro();
@@ -40,6 +43,7 @@ public class CurrencyConversionTest extends BaseTest {
 
         Assert.assertEquals(actualPriceInEuro, expectedPriceInEuro, actualPriceInEuro*0.05,
                 "Expected price: " + expectedPriceInEuro + " should not differ from actual: " + actualPriceInEuro + " more then 5%" );
+        logger.info("Test finished");
     }
 
 }

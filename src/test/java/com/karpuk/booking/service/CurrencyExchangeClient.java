@@ -4,11 +4,14 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
 public class CurrencyExchangeClient {
+
+    private static final Logger logger = Logger.getLogger(CurrencyExchangeClient.class.getSimpleName());
 
     private static final String URL = "https://free.currencyconverterapi.com/api/v6/convert";
     private static final String COMPACT_PARAMETR = "compact";
@@ -30,11 +33,12 @@ public class CurrencyExchangeClient {
                 .build();
 
         try {
+            logger.info("Sending request " + request);
             Response response = client.newCall(request).execute();
             String jsonStringBody = response.body().string();
+            logger.info("Response: " + jsonStringBody);
             JSONObject obj = new JSONObject(jsonStringBody);
             return obj.getDouble(currencyExchange);
-
         } catch (IOException e) {
             throw new RuntimeException("Can not get rate", e);
         }

@@ -22,6 +22,7 @@ public class SortResultsByPriceTest extends BaseTest {
         steps.openMainPage();
         steps.setCurrency(CURRENCY);
         steps.setLanguage(LANGUAGE);
+        logger.info("MainPage opened. Set currency and language");
     }
 
     @Test
@@ -29,8 +30,11 @@ public class SortResultsByPriceTest extends BaseTest {
         steps.selectRegion(REGION);
         steps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
         steps.clickSearchButton();
+        logger.info("Start searching...");
+
         steps.selectAvailability();
         steps.selectStarRating(STAR_RATING);
+
         steps.sortLowestUsdPriceFirst();
         List<Integer> pricesList = new ArrayList<>();
         do {
@@ -42,6 +46,7 @@ public class SortResultsByPriceTest extends BaseTest {
                     pricesList.get(i) <= pricesList.get(i + 1),
                     "Price " + pricesList.get(i) + "$ shouldn`t be higher than " + pricesList.get(i + 1) + "$");
         }
+        logger.info("Test finished");
     }
 
 }

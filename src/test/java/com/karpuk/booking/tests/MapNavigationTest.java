@@ -20,6 +20,7 @@ public class MapNavigationTest extends BaseTest {
         steps.openMainPage();
         steps.setCurrency(CURRENCY);
         steps.setLanguage(LANGUAGE);
+        logger.info("MainPage opened. Set currency and language");
     }
 
     @Test
@@ -27,12 +28,13 @@ public class MapNavigationTest extends BaseTest {
         steps.selectRegion(REGION);
         steps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
         steps.clickSearchButton();
+        logger.info("Start searching...");
+
         steps.selectAvailability();
         steps.openAndSwitchToFirstResultDetailsPage();
         Apartment expectedApartment = steps.getApartmentFromDetailsPage();
         steps.navigateToMapFromApartDetailsPage();
         Apartment actualApartment = steps.getApartmentFromCurrentPositionOnMap();
-
 
         Assert.assertTrue(actualApartment.getName().contains(expectedApartment.getName()) || expectedApartment.getName().contains(actualApartment.getName()),
                 "Expected name: " + expectedApartment.getName() + ". Actual name: " +  actualApartment.getName());
@@ -40,6 +42,7 @@ public class MapNavigationTest extends BaseTest {
                 "Expected rating: " + expectedApartment.getRating() + ". Actual rating: " +  actualApartment.getRating());
         Assert.assertEquals(actualApartment.getScore(), expectedApartment.getScore(),
                 "Expected score: " + expectedApartment.getScore() + ". Actual score: " +  actualApartment.getScore());
+        logger.info("Test finished");
     }
 
 }

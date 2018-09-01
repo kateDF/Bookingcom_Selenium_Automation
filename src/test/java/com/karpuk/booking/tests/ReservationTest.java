@@ -23,6 +23,7 @@ public class ReservationTest extends BaseTest {
         steps.openMainPage();
         steps.setCurrency(CURRENCY);
         steps.setLanguage(LANGUAGE);
+        logger.info("MainPage opened. Set currency and language");
     }
 
     @Test
@@ -30,6 +31,7 @@ public class ReservationTest extends BaseTest {
         steps.selectRegion(REGION);
         steps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
         steps.clickSearchButton();
+        logger.info("Start searching...");
 
         steps.selectAvailability();
         steps.selectFreeCancellation();
@@ -37,6 +39,7 @@ public class ReservationTest extends BaseTest {
 
         steps.selectRoomsInReservationTable(NUMBER_OF_ROOMS);
         steps.clickReservationButton();
+        logger.info("Start reservation...");
 
         steps.fillInGuestInformation(EXPECTED_GUEST);
         steps.clickNextSecureDetailsButton();
@@ -49,7 +52,7 @@ public class ReservationTest extends BaseTest {
                 "Expected Last name: " + EXPECTED_GUEST.getLastName() + ". Actual Last name: " + actualGuestInfo.getLastName());
         Assert.assertEquals(actualGuestInfo.getEmail(), EXPECTED_GUEST.getEmail(),
                 "Expected Email: " + EXPECTED_GUEST.getEmail() + ". Actual Email: " + actualGuestInfo.getEmail());
-
+        logger.info("Test finished");
 
     }
 

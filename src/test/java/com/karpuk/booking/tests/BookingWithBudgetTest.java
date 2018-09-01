@@ -20,6 +20,7 @@ public class BookingWithBudgetTest extends BaseTest {
         steps.openMainPage();
         steps.setCurrency(CURRENCY);
         steps.setLanguage(LANGUAGE);
+        logger.info("MainPage opened. Set currency and language");
     }
 
     @Test
@@ -27,11 +28,14 @@ public class BookingWithBudgetTest extends BaseTest {
         steps.selectRegion(REGION);
         steps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
         steps.clickSearchButton();
+        logger.info("Start searching...");
+
         steps.selectAvailability();
         int availableWithoutBudgetMark = steps.getNumberOfSearchResults();
         steps.selectBudget(BUDGET_GROUP);
 
         Assert.assertTrue(steps.getNumberOfSearchResults() <= availableWithoutBudgetMark);
+        logger.info("Test finished");
     }
 
 }

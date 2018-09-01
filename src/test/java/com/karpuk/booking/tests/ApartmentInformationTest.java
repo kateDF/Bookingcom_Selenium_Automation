@@ -6,6 +6,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.LocalDate;
+import java.util.logging.Logger;
 
 public class ApartmentInformationTest extends BaseTest {
 
@@ -20,6 +21,7 @@ public class ApartmentInformationTest extends BaseTest {
         steps.openMainPage();
         steps.setCurrency(CURRENCY);
         steps.setLanguage(LANGUAGE);
+        logger.info("MainPage opened. Set currency and language");
     }
 
     @Test
@@ -28,6 +30,8 @@ public class ApartmentInformationTest extends BaseTest {
         steps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
         steps.selectGuestsInformation(1, 2, 1);
         steps.clickSearchButton();
+        logger.info("Start searching...");
+
         steps.selectAvailability();
         Apartment firstApartmentFromSearchResultPage = steps.getFirstResultApartmentFromSearchPage();
         steps.openAndSwitchToFirstResultDetailsPage();
@@ -36,6 +40,7 @@ public class ApartmentInformationTest extends BaseTest {
         Assert.assertEquals(firstApartmentFromSearchResultPage.getName(), apartmentFromDetailsPage.getName());
         Assert.assertEquals(firstApartmentFromSearchResultPage.getRating(), apartmentFromDetailsPage.getRating());
         Assert.assertEquals(firstApartmentFromSearchResultPage.getScore(), apartmentFromDetailsPage.getScore());
+        logger.info("Test finished");
     }
 
 }
