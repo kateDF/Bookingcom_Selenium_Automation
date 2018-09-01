@@ -31,8 +31,6 @@ public class BookingCalendar {
     }
 
     public void setDates(LocalDate checkInDate, LocalDate checkOutDate) {
-        int currentYear = LocalDate.now().getYear();
-        // TODO: check year
         selectCheckInMonth(checkInDate);
         selectDay(checkInDate);
         selectCheckOutMonth(checkInDate, checkOutDate);
@@ -41,6 +39,21 @@ public class BookingCalendar {
 
     private void selectCheckInMonth(LocalDate checkInDate) {
         int currentMonth = LocalDate.now().getMonthValue();
+        if(checkInDate.getYear() == LocalDate.now().getYear()){
+            changeMonth(currentMonth, checkInDate);
+        } else if(checkInDate.getYear() > LocalDate.now().getYear()){
+            System.out.println(currentMonth);
+
+            for(int i = currentMonth; i <= 12; i++){
+                System.out.println("i " + i);
+                furtherMonthLinks.get(0).click();
+            }
+            currentMonth = 1;
+            changeMonth(currentMonth, checkInDate);
+        }
+    }
+
+    private void changeMonth(int currentMonth, LocalDate checkInDate){
         while (currentMonth != checkInDate.getMonthValue()) {
             furtherMonthLinks.get(0).click();
             currentMonth++;
@@ -67,6 +80,20 @@ public class BookingCalendar {
                     day.click();
                     break;
                 }
+            }
+        }
+    }
+
+    private void selectYear(LocalDate checkInDate){
+        System.out.println("chec " + checkInDate.getYear());
+        System.out.println("nnn " + LocalDate.now().getYear());
+        if(checkInDate.getYear() > LocalDate.now().getYear()){
+            int currentMonth = LocalDate.now().getMonthValue();
+            System.out.println(currentMonth);
+
+            for(int i = currentMonth; i < 13; i++){
+                System.out.println("i " + i);
+                furtherMonthLinks.get(0).click();
             }
         }
     }
