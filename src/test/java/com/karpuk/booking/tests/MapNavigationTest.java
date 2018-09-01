@@ -12,8 +12,8 @@ public class MapNavigationTest extends BaseTest {
     private static final String CURRENCY = "EUR";
     private static final String LANGUAGE = "English (US)";
     private static final String REGION = "Minsk";
-    private static LocalDate CHECKIN_DATE = LocalDate.now().plusDays(2);
-    private static LocalDate CHECKOUT_DATE = CHECKIN_DATE.plusDays(5);
+    private static final LocalDate CHECKIN_DATE = LocalDate.now().plusDays(2);
+    private static final LocalDate CHECKOUT_DATE = CHECKIN_DATE.plusDays(5);
 
     @BeforeMethod
     public void open() {
