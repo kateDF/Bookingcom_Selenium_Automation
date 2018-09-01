@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FreeCancellationBookingTest extends BaseTest {
+public class PageWalkerTest extends BaseTest {
 
     private static final String CURRENCY = "USD";
     private static final String LANGUAGE = "English (US)";
@@ -25,13 +25,12 @@ public class FreeCancellationBookingTest extends BaseTest {
     }
 
     @Test
-    public void availableFreeCancellationWithChildrenTest() {
+    public void numberOfResultsInTitleEqualToActualInAllPages() {
         steps.selectRegion(REGION);
         steps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
         steps.selectNumberOfChildren(NUMBER_OF_CHILDREN);
         steps.clickSearchButton();
         steps.selectAvailability();
-        steps.selectFreeCancellation();
 
         List<String> actualResultsHotels = new ArrayList<>();
         do {
