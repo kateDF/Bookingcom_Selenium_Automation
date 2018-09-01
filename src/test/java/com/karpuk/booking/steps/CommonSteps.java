@@ -12,7 +12,6 @@ import org.openqa.selenium.WebDriver;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class CommonSteps {
 
@@ -120,6 +119,11 @@ public class CommonSteps {
         return resultsPage.clickNextResultsPage();
     }
 
+    public void sortLowestUsdPriceFirst(){
+        SearchResultsPage resultsPage = new SearchResultsPage(driver);
+        resultsPage.sortLowestPriceFirst();
+    }
+
     public Apartment getFirstResultApartmentFromSearchPage(){
         SearchResultsPage resultsPage = new SearchResultsPage(driver);
         return resultsPage.getFirstSearchResult();
@@ -144,9 +148,19 @@ public class CommonSteps {
         return detailsPage.getApartment();
     }
 
-    public void sortLowestUsdPriceFirst(){
-        SearchResultsPage resultsPage = new SearchResultsPage(driver);
-        resultsPage.sortLowestPriceFirst();
+    public void navigateToMapFromApartDetailsPage(){
+        ApartmentDetailsPage apartmentDetailsPage = new ApartmentDetailsPage(driver);
+        apartmentDetailsPage.navigateToMap();
+    }
+
+    public void selectCurrentPositionOnMap(){
+        ApartmentDetailsPage apartmentDetailsPage = new ApartmentDetailsPage(driver);
+        apartmentDetailsPage.selectCurrentLocationOnMap();
+    }
+
+    public Apartment getApartmentFromCurrentPositionOnMap(){
+        ApartmentDetailsPage apartmentDetailsPage = new ApartmentDetailsPage(driver);
+        return apartmentDetailsPage.getApartmentInfoFromCurrentPositionOnMap();
     }
 
     public boolean setCurrency(String currencyName) {
