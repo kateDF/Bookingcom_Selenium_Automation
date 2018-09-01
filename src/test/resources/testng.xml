@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="MainSuit">
+    <listeners>
+        <listener class-name="com.karpuk.booking.listener.ScreenshotListener" />
+    </listeners>
+    <test name="testOne">
+        <classes>
+            <class name="com.karpuk.booking.tests.BookingWithBudgetTest"/>
+            <class name="com.karpuk.booking.tests.CurrencyConversionTest"/>
+            <class name="com.karpuk.booking.tests.ApartmentInformationTest"/>
+            <class name="com.karpuk.booking.tests.MapNavigationTest"/>
+            <class name="com.karpuk.booking.tests.PageWalkerTest"/>
+            <class name="com.karpuk.booking.tests.SortResultsByPriceTest"/>
+            <class name="com.karpuk.booking.tests.ReservationTest"/>
+        </classes>
+    </test>
+</suite>
