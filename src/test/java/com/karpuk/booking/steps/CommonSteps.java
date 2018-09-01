@@ -4,9 +4,11 @@ import com.karpuk.booking.components.GuestsInformationForm;
 import com.karpuk.booking.components.Header;
 import com.karpuk.booking.driver.DriverSingleton;
 import com.karpuk.booking.entity.Apartment;
+import com.karpuk.booking.entity.Guest;
 import com.karpuk.booking.pages.ApartmentDetailsPage;
 import com.karpuk.booking.pages.MainAccommodationPage;
 import com.karpuk.booking.pages.SearchResultsPage;
+import com.karpuk.booking.pages.SecureBookingPage;
 import org.openqa.selenium.WebDriver;
 
 import java.time.LocalDate;
@@ -158,9 +160,19 @@ public class CommonSteps {
         apartmentDetailsPage.selectCurrentLocationOnMap();
     }
 
-    public Apartment getApartmentFromCurrentPositionOnMap(){
+    public Apartment getApartmentFromCurrentPositionOnMap() {
         ApartmentDetailsPage apartmentDetailsPage = new ApartmentDetailsPage(driver);
         return apartmentDetailsPage.getApartmentInfoFromCurrentPositionOnMap();
+    }
+
+    public boolean selectRoomsInReservationTable(int numberOfRooms) {
+        ApartmentDetailsPage apartmentDetailsPage = new ApartmentDetailsPage(driver);
+        return apartmentDetailsPage.selectNumberOfRoomsXpath(numberOfRooms);
+    }
+
+    public void clickReservationButton() {
+        ApartmentDetailsPage apartmentDetailsPage = new ApartmentDetailsPage(driver);
+        apartmentDetailsPage.clickReservationButton();
     }
 
     public boolean setCurrency(String currencyName) {
@@ -172,5 +184,26 @@ public class CommonSteps {
         Header header = new Header(driver);
         return header.selectLanguage(language);
     }
+
+    public void fillInGuestInformation(Guest guest){
+        SecureBookingPage securePage = new SecureBookingPage(driver);
+        securePage.fillGuestInformation(guest);
+    }
+
+    public void clickNextSecureDetailsButton(){
+        SecureBookingPage securePage = new SecureBookingPage(driver);
+        securePage.clickNextDetailsButton();
+    }
+
+    public Guest getGuestInfoFromFinalDetailsSecure(){
+        SecureBookingPage securePage = new SecureBookingPage(driver);
+        return securePage.getGuestInfoFromFinalDetails();
+    }
+
+    public void closeModalMaskInSecurePage(){
+        SecureBookingPage securePage = new SecureBookingPage(driver);
+        securePage.closeModalMask();
+    }
+
 
 }
