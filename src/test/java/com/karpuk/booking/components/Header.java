@@ -1,6 +1,7 @@
 package com.karpuk.booking.components;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -41,18 +42,14 @@ public class Header {
     public boolean selectCurrency(String currencyName) {
         String actualCurrency = currencyValue.getAttribute("value");
         if (!actualCurrency.equals(currencyName.toUpperCase())) {
-            (new WebDriverWait(driver, 10))
-                    .until(ExpectedConditions.elementToBeClickable(currencyButton)).click();
-            // currencyButton.click();
+            waitAndClickHeaderButton(currencyButton);
             return setCurrency(currencyName);
         }
         return true;
     }
 
     public boolean selectLanguage(String language) {
-        (new WebDriverWait(driver, 10))
-                .until(ExpectedConditions.elementToBeClickable(languageButton)).click();
-        //languageButton.click();
+        waitAndClickHeaderButton(languageButton);
         return setLanguage(language);
     }
 
@@ -76,6 +73,11 @@ public class Header {
             }
         }
         return false;
+    }
+
+    private void waitAndClickHeaderButton(WebElement button) {
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(button));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
     }
 
 }
