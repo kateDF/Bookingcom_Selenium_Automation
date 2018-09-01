@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 import java.time.LocalDate;
 
-public class DetailsApartmentInformationTest extends BaseTest {
+public class ApartmentInformationTest extends BaseTest {
 
     private static final String CURRENCY = "EUR";
     private static final String LANGUAGE = "English (US)";
