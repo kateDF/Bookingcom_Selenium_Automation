@@ -11,8 +11,8 @@ public class BookingWithBudgetTest extends BaseTest {
     private static final String CURRENCY = "EUR";
     private static final String LANGUAGE = "English (US)";
     private static final String REGION = "Minsk";
-    private static final LocalDate CHECKIN_DATE = LocalDate.now().plusDays(1);
-    private static final LocalDate CHECKOUT_DATE = CHECKIN_DATE.plusDays(10);
+    private static final LocalDate CHECKIN_DATE = LocalDate.now().plusDays(14);
+    private static final LocalDate CHECKOUT_DATE = CHECKIN_DATE.plusDays(20);
     private static final int BUDGET_GROUP = 1;
 
     @BeforeMethod
