@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 import java.time.LocalDate;
 
-public class BookingCurrencyConversionTest extends BaseTest {
+public class CurrencyConversionTest extends BaseTest {
 
     private static final String CURRENCY_USD = "USD";
     private static final String CURRENCY_EURO = "EUR";
