@@ -21,7 +21,7 @@ public class SearchResultsPage extends AbstractPage {
     private static final String LIST_OF_HOTELS_NAMES_WITH_RECOMMENDED_OUTSIDE_XPATH = "//span[contains(@class,'sr-hotel__name')]";
     private static final String LIST_OF_HOTELS_NAMES_XPATH = "//span[contains(@class,'bicon-direction-arrow')]/following-sibling::span/../../preceding-sibling::*[contains(@class,'sr-hotel__title')]";
     private static final String LIST_PRICES_INFO_FOR_USD_XPATH = "//*[contains(@class,'price')]//b[contains(text(),'US')] |  //div[contains(@class, 'totalPrice')][contains(text(),'US')] | //b[@class='sr_gs_price_total']";
-    private static final String LIST_PRICES_INFO_FOR_EURO_XPATH = "//*[contains(@class,'price')]//b[contains(text(),'€')] |  //div[contains(@class, 'totalPrice')][contains(text(),'€')] | //b[@class='sr_gs_price_total']";
+    private static final String LIST_PRICES_INFO_FOR_EURO_XPATH = "//*[contains(@class,'price')]//b[contains(text(),'\u20ac')] |  //div[contains(@class, 'totalPrice')][contains(text(),'\u20ac')] | //b[@class='sr_gs_price_total']";
 
     private static final String RATING_TITLES_XPATH = "//span[@class='review-score-widget__body']/span[@class='review-score-widget__text']";
     private static final String SCORE_TITLES_XPATH = "//span[@class='review-score-badge']";
@@ -99,7 +99,7 @@ public class SearchResultsPage extends AbstractPage {
                 }
             }
             String[] res = resultsFull.get(i).getText().split("\\$");
-            prices.add(Integer.parseInt(res[1].replaceAll(",", "")));
+            prices.add(Integer.parseInt(res[1].replaceAll("\\D+", "")));
         }
         return prices;
     }
@@ -144,8 +144,8 @@ public class SearchResultsPage extends AbstractPage {
     public int getFirstResultPriceInEuro(){
         waitLoadEnd();
         WebElement firstResultLineWithPrice = driver.findElement(By.xpath(LIST_PRICES_INFO_FOR_EURO_XPATH));
-        String[] priceResult = firstResultLineWithPrice.getText().split("€");
-        return Integer.parseInt(priceResult[1].replaceAll(" ", "").replaceAll(",", ""));
+        String[] priceResult = firstResultLineWithPrice.getText().split("\u20ac");
+        return Integer.parseInt(priceResult[1].replaceAll("\\D+", ""));
     }
 
 
