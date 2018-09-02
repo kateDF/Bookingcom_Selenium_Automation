@@ -57,7 +57,7 @@ public class Header {
         allCurrencies = driver.findElements(By.xpath(ALL_CURRENCIES_XPATH));
         for (WebElement cur : allCurrencies) {
             if (currencyName.equalsIgnoreCase(cur.getAttribute("data-lang"))) {
-                cur.findElement(By.tagName("a")).click();
+                waitAndClickHeaderButton(cur.findElement(By.tagName("a")));
                 return true;
             }
         }
@@ -68,7 +68,7 @@ public class Header {
         allLanguages = driver.findElements(By.xpath(ALL_LANGUAGES_XPATH));
         for (WebElement lang : allLanguages) {
             if (lang.getText().equalsIgnoreCase(language)) {
-                lang.findElement(By.tagName("a")).click();
+                waitAndClickHeaderButton(lang.findElement(By.tagName("a")));
                 return true;
             }
         }
