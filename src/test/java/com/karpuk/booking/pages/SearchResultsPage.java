@@ -2,6 +2,7 @@ package com.karpuk.booking.pages;
 
 import com.karpuk.booking.entity.Apartment;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -180,7 +181,7 @@ public class SearchResultsPage extends AbstractPage {
         String fullXpath = String.format(BUDGET_OPTIONS_XPATH, budgetGroupNumber);
         List<WebElement> budgetCheckBox = driver.findElements(By.xpath(fullXpath));
         if (!budgetCheckBox.isEmpty()) {
-            budgetCheckBox.get(0).click();
+            waitAndClickCheckbox(budgetCheckBox.get(0));
             return true;
         }
         return false;
@@ -190,7 +191,7 @@ public class SearchResultsPage extends AbstractPage {
         String fullXpath = String.format(STAR_RATING_OPTIONS_XPATH, starRating);
         List<WebElement> starRatingCheckBox = driver.findElements(By.xpath(fullXpath));
         if (!starRatingCheckBox.isEmpty()) {
-            starRatingCheckBox.get(0).click();
+            waitAndClickCheckbox(starRatingCheckBox.get(0));
             return true;
         }
         return false;
@@ -223,6 +224,11 @@ public class SearchResultsPage extends AbstractPage {
     private void waitLoadEnd() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(LOAD_WAIT_SPINNER_XPATH)));
+    }
+
+    private void waitAndClickCheckbox(WebElement checkbox) {
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(checkbox));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", checkbox);
     }
 
 }
