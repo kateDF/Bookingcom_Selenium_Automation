@@ -32,7 +32,7 @@ public class SortResultsByPriceTest extends BaseTest {
         steps.clickSearchButton();
         logger.info("Start searching...");
 
-        steps.selectAvailability();
+        steps.selectOnlyAvailable();
         steps.selectStarRating(STAR_RATING);
 
         steps.sortLowestUsdPriceFirst();

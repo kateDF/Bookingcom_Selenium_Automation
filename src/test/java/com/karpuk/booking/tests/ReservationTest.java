@@ -33,7 +33,7 @@ public class ReservationTest extends BaseTest {
         steps.clickSearchButton();
         logger.info("Start searching...");
 
-        steps.selectAvailability();
+        steps.selectOnlyAvailable();
         steps.selectFreeCancellation();
         steps.openAndSwitchToFirstResultDetailsPage();
 

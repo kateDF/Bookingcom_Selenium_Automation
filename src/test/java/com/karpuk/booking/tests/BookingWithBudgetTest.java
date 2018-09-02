@@ -30,11 +30,13 @@ public class BookingWithBudgetTest extends BaseTest {
         steps.clickSearchButton();
         logger.info("Start searching...");
 
-        steps.selectAvailability();
+        steps.selectOnlyAvailable();
         int availableWithoutBudgetMark = steps.getNumberOfSearchResults();
         steps.selectBudget(BUDGET_GROUP);
+        int availableWithBudgetMark = steps.getNumberOfSearchResults();
 
-        Assert.assertTrue(steps.getNumberOfSearchResults() <= availableWithoutBudgetMark);
+        Assert.assertTrue(availableWithBudgetMark <= availableWithoutBudgetMark,
+                "Number of results with selected budget: " + availableWithBudgetMark + " should not be more than " + availableWithoutBudgetMark);
         logger.info("Test finished");
     }
 

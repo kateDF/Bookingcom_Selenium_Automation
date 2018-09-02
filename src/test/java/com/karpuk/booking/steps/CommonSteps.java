@@ -73,7 +73,7 @@ public class CommonSteps {
         return resultsPage.getNumberOfResults();
     }
 
-    public void selectAvailability() {
+    public void selectOnlyAvailable() {
         SearchResultsPage resultsPage = new SearchResultsPage(driver);
         resultsPage.selectAvailabilityCheckbox();
     }

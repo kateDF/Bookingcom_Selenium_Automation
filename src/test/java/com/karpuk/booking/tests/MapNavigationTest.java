@@ -30,7 +30,7 @@ public class MapNavigationTest extends BaseTest {
         steps.clickSearchButton();
         logger.info("Start searching...");
 
-        steps.selectAvailability();
+        steps.selectOnlyAvailable();
         steps.openAndSwitchToFirstResultDetailsPage();
         Apartment expectedApartment = steps.getApartmentFromDetailsPage();
         steps.navigateToMapFromApartDetailsPage();

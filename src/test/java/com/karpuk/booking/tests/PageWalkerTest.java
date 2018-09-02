@@ -33,7 +33,7 @@ public class PageWalkerTest extends BaseTest {
         steps.clickSearchButton();
         logger.info("Start searching...");
 
-        steps.selectAvailability();
+        steps.selectOnlyAvailable();
         List<String> actualResultsHotels = new ArrayList<>();
         do {
             actualResultsHotels.addAll(steps.getResultsHotelsNames());

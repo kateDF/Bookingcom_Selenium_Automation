@@ -34,7 +34,7 @@ public class CurrencyConversionTest extends BaseTest {
         steps.clickSearchButton();
         logger.info("Start searching...");
 
-        steps.selectAvailability();
+        steps.selectOnlyAvailable();
         int originalPriceInUsd = steps.getFirstResultPriceInUsd();
         int actualPriceInEuro = steps.getFirstResultPriceInEuro();
         double rate = currencyExchangeClient.getRate(CURRENCY_USD, CURRENCY_EURO);

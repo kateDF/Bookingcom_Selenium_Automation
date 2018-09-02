@@ -6,7 +6,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.LocalDate;
-import java.util.logging.Logger;
 
 public class ApartmentInformationTest extends BaseTest {
 
@@ -32,14 +31,17 @@ public class ApartmentInformationTest extends BaseTest {
         steps.clickSearchButton();
         logger.info("Start searching...");
 
-        steps.selectAvailability();
-        Apartment firstApartmentFromSearchResultPage = steps.getFirstResultApartmentFromSearchPage();
+        steps.selectOnlyAvailable();
+        Apartment expectedApartment = steps.getFirstResultApartmentFromSearchPage();
         steps.openAndSwitchToFirstResultDetailsPage();
-        Apartment apartmentFromDetailsPage = steps.getApartmentFromDetailsPage();
+        Apartment actualApartment = steps.getApartmentFromDetailsPage();
 
-        Assert.assertEquals(firstApartmentFromSearchResultPage.getName(), apartmentFromDetailsPage.getName());
-        Assert.assertEquals(firstApartmentFromSearchResultPage.getRating(), apartmentFromDetailsPage.getRating());
-        Assert.assertEquals(firstApartmentFromSearchResultPage.getScore(), apartmentFromDetailsPage.getScore());
+        Assert.assertEquals(expectedApartment.getName(), actualApartment.getName(),
+                "Expected name: " + expectedApartment.getName() + ". Actual name: " +  actualApartment.getName());
+        Assert.assertEquals(expectedApartment.getRating(), actualApartment.getRating(),
+                "Expected rating: " + expectedApartment.getRating() + ". Actual rating: " +  actualApartment.getRating());
+        Assert.assertEquals(expectedApartment.getScore(), actualApartment.getScore(),
+                "Expected score: " + expectedApartment.getScore() + ". Actual score: " +  actualApartment.getScore());
         logger.info("Test finished");
     }
 
