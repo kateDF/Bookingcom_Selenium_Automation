@@ -12,38 +12,30 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import javax.naming.OperationNotSupportedException;
 import java.util.List;
 
-public class SecureBookingPage extends AbstractPage{
+public class SecureBookingPage extends AbstractPage {
 
     private static final String MODAL_MASK_CLOSE_XPATH = "//button[@class='modal-mask-closeBtn']";
 
-    private static final String FIRST_NAME_FIELD_ID = "firstname";
-    private static final String LAST_NAME_FIELD_ID = "lastname";
-    private static final String EMAIL_FIELD_ID = "email";
-    private static final String EMAIL_CONFIRM_FIELD_ID = "email_confirm";
-    private static final String BOOKER_TITLE_SELECT_ID = "booker_title";
-
-    private static final String NEXT_FINAL_DETAILS_BUTTON_XPATH = "//div[contains(@class,'submit_holder_button_wrap')]//button";
-
-    private static final String GUEST_INFO_FROM_FINAL_DETAILS_XPATH = "//div[contains(@class,'book-form-field-value')]";
-
-
-    @FindBy(id = FIRST_NAME_FIELD_ID)
+    @FindBy(id = "firstname")
     private WebElement firstNameField;
 
-    @FindBy(id = LAST_NAME_FIELD_ID)
+    @FindBy(id = "lastname")
     private WebElement lastNameField;
 
-    @FindBy(id = EMAIL_FIELD_ID)
+    @FindBy(id = "email")
     private WebElement emailField;
 
-    @FindBy(id = EMAIL_CONFIRM_FIELD_ID)
+    @FindBy(id = "email_confirm")
     private WebElement emailConfirmField;
 
-    @FindBy(xpath = NEXT_FINAL_DETAILS_BUTTON_XPATH)
+    @FindBy(xpath = "//div[contains(@class,'submit_holder_button_wrap')]//button")
     private WebElement nextDetailsButton;
 
-    @FindBy(id = BOOKER_TITLE_SELECT_ID)
+    @FindBy(id = "booker_title")
     private WebElement bookerTitleSelect;
+
+    @FindBy(xpath = "//div[contains(@class,'book-form-field-value')]")
+    private List<WebElement> guestInfo;
 
     public SecureBookingPage(WebDriver driver) {
         super(driver);
@@ -55,13 +47,13 @@ public class SecureBookingPage extends AbstractPage{
         throw new OperationNotSupportedException();
     }
 
-    public void closeModalMask(){
+    public void closeModalMask() {
         new WebDriverWait(driver, 20)
                 .until(ExpectedConditions.elementToBeClickable(By.xpath(MODAL_MASK_CLOSE_XPATH)))
                 .click();
     }
 
-    public void fillGuestInformation(Guest guest){
+    public void fillGuestInformation(Guest guest) {
         selectBookerTitle(guest.getGuestTitle().toString());
         fillInField(firstNameField, guest.getFirstName());
         fillInField(lastNameField, guest.getLastName());
@@ -69,53 +61,52 @@ public class SecureBookingPage extends AbstractPage{
         fillInField(emailConfirmField, guest.getEmail());
     }
 
-    public void clickNextDetailsButton(){
+    public void clickNextDetailsButton() {
         waitForClickable(nextDetailsButton);
         nextDetailsButton.click();
     }
 
-    public Guest getGuestInfoFromFinalDetails(){
-        try{
+    public Guest getGuestInfoFromFinalDetails() {
+        try {
             return getGuestInfo();
-        } catch (WebDriverException e){
+        } catch (WebDriverException e) {
             closeModalMask();
             return getGuestInfo();
         }
     }
 
-    private void selectBookerTitle(String bookerTitle){
+    private void selectBookerTitle(String bookerTitle) {
         try {
             selectOption(bookerTitle);
-        } catch (WebDriverException e){
+        } catch (WebDriverException e) {
             closeModalMask();
             selectOption(bookerTitle);
         }
     }
 
-    private void fillInField(WebElement field, String value){
+    private void fillInField(WebElement field, String value) {
         try {
             updateFieldValue(field, value);
-        } catch (WebDriverException e){
+        } catch (WebDriverException e) {
             closeModalMask();
             updateFieldValue(field, value);
         }
     }
 
-    private void updateFieldValue(WebElement field, String value){
+    private void updateFieldValue(WebElement field, String value) {
         field.clear();
         field.sendKeys(value);
     }
 
-    private void selectOption(String option){
+    private void selectOption(String option) {
         (new Select(bookerTitleSelect)).selectByValue(option.toLowerCase());
     }
 
-    private Guest getGuestInfo(){
-        List<WebElement> guestInfo = driver.findElements(By.xpath(GUEST_INFO_FROM_FINAL_DETAILS_XPATH));
+    private Guest getGuestInfo() {
         String[] guestName = guestInfo.get(0).getText().split(" ");
         Guest guest = new Guest();
 
-        if(guestName.length == 1){
+        if (guestName.length == 1) {
             guest.setLastName(guestName[0]);
         } else {
             guest.setFirstName(guestName[0]);
@@ -126,7 +117,7 @@ public class SecureBookingPage extends AbstractPage{
         return guest;
     }
 
-    private void waitForClickable(WebElement element){
+    private void waitForClickable(WebElement element) {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.elementToBeClickable(element));
     }
