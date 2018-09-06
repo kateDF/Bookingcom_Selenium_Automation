@@ -14,40 +14,40 @@ import java.util.List;
 
 public class ApartmentDetailsPage extends AbstractPage {
 
-    private static final String HOTEL_NAME_XPATH = "//*[@class='hp__hotel-name']";
-    private static final String RATING_XPATH = "//div[@id='js--hp-gallery-scorecard']//span[@class='review-score-widget__text']";
-    private static final String SCORE_XPATH = "//div[@id='js--hp-gallery-scorecard']//span[@class='review-score-badge']";
-    private static final String LOCATION_XPATH = "//span[contains(@class,'hp_address_subtitle')]";
-    private static final String MAP_LINK_XPATH = "//a[contains(@class,'show_map')]";
-
-    private static final String CURRENT_LOCATION_ON_MAP_XPATH = "//div[contains(@class,'current')]";
-    private static final String LOCATION_TITLE_ON_MAP_ID = "map_hotel_overlay_title";
-    private static final String LOCATION_SCORE_ON_MAP_XPATH = "//div[@id='map_hotel_overlay_content_wrapper']//span[@class='review-score-badge']";
-    private static final String LOCATION_RATING_ON_MAP_XPATH = "//div[@id='map_hotel_overlay_content_wrapper']//span[@class='review-score-widget__text']";
-
     private static final String SELECT_NUMBER_OF_ROOMS_XPATH = "//td[contains(@class,'hprt-table-room-select')]//select";
     private static final String OPTION_ROOMS_XPATH =  "/option[@value='%d']";
-    private static final String RESERVATION_BUTTON_XPATH = "//div[@class='hprt-reservation-cta']/button";
 
-    @FindBy(xpath = HOTEL_NAME_XPATH)
+    @FindBy(xpath = "//*[@class='hp__hotel-name']")
     private WebElement hotelName;
 
-    @FindBy(xpath = RATING_XPATH)
+    @FindBy(xpath = "//div[@id='js--hp-gallery-scorecard']//span[@class='review-score-widget__text']")
     private WebElement rating;
 
-    @FindBy(xpath = SCORE_XPATH)
+    @FindBy(xpath = "//div[@id='js--hp-gallery-scorecard']//span[@class='review-score-badge']")
     private WebElement score;
 
-    @FindBy(xpath = LOCATION_XPATH)
+    @FindBy(xpath = "//span[contains(@class,'hp_address_subtitle')]")
     private WebElement location;
 
-    @FindBy(xpath = MAP_LINK_XPATH)
+    @FindBy(xpath = "//a[contains(@class,'show_map')]")
     private WebElement mapLink;
+
+    @FindBy(xpath = "//div[contains(@class,'current')]")
+    private WebElement currentLocationOnMap;
+
+    @FindBy(id = "map_hotel_overlay_title")
+    private WebElement locationTitleOnMap;
+
+    @FindBy(xpath = "//div[@id='map_hotel_overlay_content_wrapper']//span[@class='review-score-badge']")
+    private WebElement locationScoreOnMap;
+
+    @FindBy(xpath = "//div[@id='map_hotel_overlay_content_wrapper']//span[@class='review-score-widget__text']")
+    private WebElement locationRatingOnMap;
 
     @FindBy(xpath = SELECT_NUMBER_OF_ROOMS_XPATH)
     private WebElement selectRooms;
 
-    @FindBy(xpath = RESERVATION_BUTTON_XPATH)
+    @FindBy(xpath = "//div[@class='hprt-reservation-cta']/button")
     private WebElement reservationButton;
 
     public ApartmentDetailsPage(WebDriver driver) {
@@ -76,15 +76,15 @@ public class ApartmentDetailsPage extends AbstractPage {
     }
 
     public void selectCurrentLocationOnMap() {
-        driver.findElement(By.xpath(CURRENT_LOCATION_ON_MAP_XPATH)).click();
+        currentLocationOnMap.click();
     }
 
     public Apartment getApartmentInfoFromCurrentPositionOnMap(){
         Apartment apartment = new Apartment();
 
-        apartment.setName(driver.findElement(By.id(LOCATION_TITLE_ON_MAP_ID)).getText());
-        apartment.setRating(driver.findElement(By.xpath(LOCATION_RATING_ON_MAP_XPATH)).getText());
-        apartment.setScore(parseDouble(driver.findElement(By.xpath(LOCATION_SCORE_ON_MAP_XPATH))));
+        apartment.setName(locationTitleOnMap.getText());
+        apartment.setRating(locationRatingOnMap.getText());
+        apartment.setScore(parseDouble(locationScoreOnMap));
 
         return apartment;
     }

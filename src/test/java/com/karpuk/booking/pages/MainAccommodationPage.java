@@ -15,27 +15,23 @@ public class MainAccommodationPage extends AbstractPage {
     private static final String BASE_URL = "https://www.booking.com";
     private static final String FLY_DROPDOWN_CLOSE_XPATH = "//div[contains(@class,'fly-dropdown')]//div[contains(@class,'bicon')]";
 
-    private static final String REGION_SEARCH_FIELD_ID = "ss";
-    private static final String REGION_OPTION_XPATH = "//ul/li[@role='option']";
-    private static final String CHECKIN_DATE_XPATH = "//div[@data-mode='checkin']//button";
-    private static final String CHECKOUT_DATE_XPATH = "//div[@data-mode='checkout']//button";
-    private static final String GUESTS_LABEL_XPATH = "//label[@id='xp__guests__toggle']";
-    private static final String SUBMIT_SEARCH_FORM_XPATH = "//div[@class='xp__button']//button";
-
-    @FindBy(id = REGION_SEARCH_FIELD_ID)
+    @FindBy(id = "ss")
     private WebElement regionSearchField;
 
-    @FindBy(xpath = CHECKIN_DATE_XPATH)
+    @FindBy(xpath = "//div[@data-mode='checkin']//button")
     private WebElement checkInButton;
 
-    @FindBy(xpath = CHECKOUT_DATE_XPATH)
+    @FindBy(xpath = "//div[@data-mode='checkout']//button")
     private WebElement checkOutButton;
 
-    @FindBy(xpath = GUESTS_LABEL_XPATH)
+    @FindBy(xpath = "//label[@id='xp__guests__toggle']")
     private WebElement guestsButton;
 
-    @FindBy(xpath = SUBMIT_SEARCH_FORM_XPATH)
+    @FindBy(xpath = "//div[@class='xp__button']//button")
     private WebElement searchButton;
+
+    @FindBy(xpath = "//ul/li[@role='option']")
+    private WebElement regionOption;
 
     public MainAccommodationPage(WebDriver driver) {
         super(driver);
@@ -50,7 +46,7 @@ public class MainAccommodationPage extends AbstractPage {
     public void selectRegion(String regionName) {
         regionSearchField.clear();
         regionSearchField.sendKeys(regionName);
-        driver.findElement(By.xpath(REGION_OPTION_XPATH)).click();
+        regionOption.click();
     }
 
     public void openCheckInCalendar() {
