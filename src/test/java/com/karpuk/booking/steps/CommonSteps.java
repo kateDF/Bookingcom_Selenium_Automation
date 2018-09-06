@@ -2,7 +2,7 @@ package com.karpuk.booking.steps;
 
 import com.karpuk.booking.components.GuestsInformationForm;
 import com.karpuk.booking.components.Header;
-import com.karpuk.booking.driver.DriverSingleton;
+import com.karpuk.booking.driver.ChromeDriverInit;
 import com.karpuk.booking.entity.Apartment;
 import com.karpuk.booking.entity.Guest;
 import com.karpuk.booking.pages.ApartmentDetailsPage;
@@ -23,11 +23,11 @@ public class CommonSteps {
     }
 
     public void initDriver() {
-        driver = DriverSingleton.getDriver();
+        driver = ChromeDriverInit.getDriver();
     }
 
     public void closeDriver() {
-        DriverSingleton.closeDriver();
+        ChromeDriverInit.closeDriver();
     }
 
     public MainAccommodationPage openMainPage() {

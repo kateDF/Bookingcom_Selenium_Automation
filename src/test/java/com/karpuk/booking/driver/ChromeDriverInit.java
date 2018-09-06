@@ -5,12 +5,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.concurrent.TimeUnit;
 
-public class DriverSingleton {
+public class ChromeDriverInit {
 
     private static final String WEBDRIVER_CHROME_DRIVER = "webdriver.chrome.driver";
     private static WebDriver driver;
 
-    private DriverSingleton() {
+    private ChromeDriverInit() {
     }
 
     public static WebDriver getDriver() {
