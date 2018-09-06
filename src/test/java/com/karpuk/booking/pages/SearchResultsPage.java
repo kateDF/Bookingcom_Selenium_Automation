@@ -13,46 +13,54 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import javax.naming.OperationNotSupportedException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TransferQueue;
 
 public class SearchResultsPage extends AbstractPage {
 
-    private static final String SEARCH_RESULT_HEADER_XPATH = "//div[@data-block-id='heading']//div[@role='heading']/*";
-
-    private static final String LIST_OF_HOTELS_RESULTS_FULL_ELEMENTS = "//div[@id='hotellist_inner']//div[contains(@class,'sr_item_content')]";
     private static final String LIST_OF_HOTELS_NAMES_WITH_RECOMMENDED_OUTSIDE_XPATH = "//span[contains(@class,'sr-hotel__name')]";
-    private static final String LIST_OF_HOTELS_NAMES_XPATH = "//span[contains(@class,'bicon-direction-arrow')]/following-sibling::span/../../preceding-sibling::*[contains(@class,'sr-hotel__title')]";
     private static final String LIST_PRICES_INFO_FOR_USD_XPATH = "//*[contains(@class,'price')]//b[contains(text(),'US')] |  //div[contains(@class, 'totalPrice')][contains(text(),'US')] | //b[@class='sr_gs_price_total']";
     private static final String LIST_PRICES_INFO_FOR_EURO_XPATH = "//*[contains(@class,'price')]//b[contains(text(),'\u20ac')] |  //div[contains(@class, 'totalPrice')][contains(text(),'\u20ac')] | //b[@class='sr_gs_price_total']";
 
     private static final String RATING_TITLES_XPATH = "//span[@class='review-score-widget__body']/span[@class='review-score-widget__text']";
     private static final String SCORE_TITLES_XPATH = "//span[@class='review-score-badge']";
     private static final String LOCATION_XPATH = "//a[contains(@class,'district_link visited_link')]";
-    private static final String HOTEL_FULL_INFO_BUTTON_XPATH = "//a[contains(@class,'b-button_primary')]";
 
-    private static final String MARK_HOTELS_RECOMMENDED_OUTSIDE_ARIA_XPATH = "//div[contains(@class,'distfromdest--highlight')]";
-
-    private static final String ARROW_NEXT_RESULTS_PAGE_XPATH = "//li[contains(@class,'bui-pagination__next-arrow')]/a";
     private static final String LOAD_WAIT_SPINNER_XPATH = "//*[@id='b2searchresultsPage']//div[@class='sr-usp-overlay__container']";
 
-    private static final String AVAILABILITY_CHECKBOX_XPATH = "//a[@data-id='oos-1']";
     private static final String BUDGET_OPTIONS_XPATH = "//div[@id='filter_price']/div[contains(@class,'filteroptions')]/a[@data-id='pri-%d']";
     private static final String STAR_RATING_OPTIONS_XPATH = "//div[@id='filter_class']/div[contains(@class,'filteroptions')]/a[@data-id='class-%d']";
-    private static final String FREE_CANCELLATION_CHECKBOX_XPATH = "//a[@data-id='fc-2']";
 
-    private static final String SORT_BY_PRICE_XPATH = "//li[contains(@class,'sort_price')]/a";
-
-    @FindBy(xpath = SEARCH_RESULT_HEADER_XPATH)
+    @FindBy(xpath = "//div[@data-block-id='heading']//div[@role='heading']/*")
     private WebElement searchResultText;
 
-    @FindBy(xpath = AVAILABILITY_CHECKBOX_XPATH)
+    @FindBy(xpath = "//a[@data-id='oos-1']")
     private WebElement availabilityCheckbox;
 
-    @FindBy(xpath = FREE_CANCELLATION_CHECKBOX_XPATH)
+    @FindBy(xpath = "//a[@data-id='fc-2']")
     private WebElement freeCancellationCheckbox;
 
-    @FindBy(xpath = SORT_BY_PRICE_XPATH)
+    @FindBy(xpath = "//li[contains(@class,'sort_price')]/a")
     private WebElement sortByPriceButton;
+
+    @FindBy(xpath = "//div[@id='hotellist_inner']//div[contains(@class,'sr_item_content')]")
+    private List<WebElement> resultsFullElements;
+
+    @FindBy(xpath = "//span[contains(@class,'bicon-direction-arrow')]/following-sibling::span/../../preceding-sibling::*[contains(@class,'sr-hotel__title')]")
+    private List<WebElement> resultsNames;
+
+    @FindBy(xpath = "//a[contains(@class,'b-button_primary')]")
+    private List<WebElement> buttonsFullInfo;
+
+    @FindBy(xpath = "//div[contains(@class,'distfromdest--highlight')]")
+    private List<WebElement> resultsOutside;
+
+    @FindBy(xpath = LIST_PRICES_INFO_FOR_USD_XPATH)
+    private List<WebElement> allPricesInUsd;
+
+    @FindBy(xpath = LIST_PRICES_INFO_FOR_EURO_XPATH)
+    private List<WebElement> allPricesInEuro;
+
+    @FindBy(xpath = "//li[contains(@class,'bui-pagination__next-arrow')]/a")
+    private List<WebElement> nextPageArrow;
 
     public SearchResultsPage(WebDriver driver) {
         super(driver);
@@ -79,25 +87,11 @@ public class SearchResultsPage extends AbstractPage {
         return resultNumber;
     }
 
-    public List<String> getOnePageListOfHotelsNew() {
-        waitLoadEnd();
-        List<WebElement> resultsWitnOutsideArea = driver.findElements(By.xpath(LIST_OF_HOTELS_NAMES_WITH_RECOMMENDED_OUTSIDE_XPATH));
-        int numberOfOutsideAria = countApartmentOutsideArea();
-        List<WebElement> results = resultsWitnOutsideArea.subList(0, resultsWitnOutsideArea.size()-1-numberOfOutsideAria);
-
-        List<String> hotelsNames = new ArrayList<>();
-        for (WebElement result : results) {
-            hotelsNames.add(result.getText());
-        }
-        return hotelsNames;
-    }
-
     public List<String> getOnePageListOfHotels() {
         waitLoadEnd();
-        List<WebElement> results = driver.findElements(By.xpath(LIST_OF_HOTELS_NAMES_XPATH));
 
         List<String> hotelsNames = new ArrayList<>();
-        for (WebElement result : results) {
+        for (WebElement result : resultsNames) {
             hotelsNames.add(result.getText());
         }
         return hotelsNames;
@@ -105,21 +99,19 @@ public class SearchResultsPage extends AbstractPage {
 
     public List<Integer> getOnePageListOfPricesInUsd() {
         waitLoadEnd();
-        List<WebElement> resultsFull = driver.findElements(By.xpath(LIST_PRICES_INFO_FOR_USD_XPATH));
         int numberOfOutsideAria = countApartmentOutsideArea();
 
         List<Integer> prices = new ArrayList<>();
-        for (int i = 0; i < resultsFull.size() - numberOfOutsideAria; i++) {
-            String[] res = resultsFull.get(i).getText().split("\\$");
+        for (int i = 0; i < allPricesInUsd.size() - numberOfOutsideAria; i++) {
+            String[] res = allPricesInUsd.get(i).getText().split("\\$");
             prices.add(Integer.parseInt(res[1].replaceAll("\\D+", "")));
         }
         return prices;
     }
 
     public boolean clickNextResultsPage() {
-        List<WebElement> nextButton = driver.findElements(By.xpath(ARROW_NEXT_RESULTS_PAGE_XPATH));
-        if (!nextButton.isEmpty()) {
-            nextButton.get(0).click();
+        if (!nextPageArrow.isEmpty()) {
+            nextPageArrow.get(0).click();
             return true;
         }
         return false;
@@ -127,19 +119,18 @@ public class SearchResultsPage extends AbstractPage {
 
     public Apartment getFirstSearchResult() {
         waitLoadEnd();
-        WebElement result = driver.findElement(By.xpath(LIST_OF_HOTELS_RESULTS_FULL_ELEMENTS));
         Apartment apartment = new Apartment();
 
-        String name = result.findElement(By.xpath(LIST_OF_HOTELS_NAMES_WITH_RECOMMENDED_OUTSIDE_XPATH)).getText();
+        String name = resultsFullElements.get(0).findElement(By.xpath(LIST_OF_HOTELS_NAMES_WITH_RECOMMENDED_OUTSIDE_XPATH)).getText();
         apartment.setName(name);
 
-        String rating = result.findElement(By.xpath(RATING_TITLES_XPATH)).getText();
+        String rating = resultsFullElements.get(0).findElement(By.xpath(RATING_TITLES_XPATH)).getText();
         apartment.setRating(rating);
 
-        double score = Double.parseDouble(result.findElement(By.xpath(SCORE_TITLES_XPATH)).getText().replaceAll(",", "."));
+        double score = Double.parseDouble(resultsFullElements.get(0).findElement(By.xpath(SCORE_TITLES_XPATH)).getText().replaceAll(",", "."));
         apartment.setScore(score);
 
-        String locationFull = result.findElement(By.xpath(LOCATION_XPATH)).getText();
+        String locationFull = resultsFullElements.get(0).findElement(By.xpath(LOCATION_XPATH)).getText();
         String[] location = locationFull.split("–");
         apartment.setLocation(location[0]);
 
@@ -151,7 +142,7 @@ public class SearchResultsPage extends AbstractPage {
         WebElement firstResultLineWithPrice = (new WebDriverWait(driver, 10))
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath(LIST_PRICES_INFO_FOR_USD_XPATH)));
         String[] priceResult = firstResultLineWithPrice.getText().split("\\$");
-        return Integer.parseInt(priceResult[1].replaceAll(",","."));
+        return Integer.parseInt(priceResult[1].replaceAll("\\D+", ""));
     }
 
     public int getFirstResultPriceInEuro(){
@@ -165,9 +156,8 @@ public class SearchResultsPage extends AbstractPage {
 
     public boolean openFirstResultApartmentDetailsPage(){
         waitLoadEnd();
-        List<WebElement> buttonList = driver.findElements(By.xpath(HOTEL_FULL_INFO_BUTTON_XPATH));
-        if(!buttonList.isEmpty()){
-            buttonList.get(0).click();
+        if(!buttonsFullInfo.isEmpty()){
+            buttonsFullInfo.get(0).click();
             return true;
         }
         return false;
@@ -218,7 +208,7 @@ public class SearchResultsPage extends AbstractPage {
     }
 
     private int countApartmentOutsideArea(){
-        return driver.findElements(By.xpath(MARK_HOTELS_RECOMMENDED_OUTSIDE_ARIA_XPATH)).size();
+        return resultsOutside.size();
     }
 
     private void waitLoadEnd() {
