@@ -13,25 +13,21 @@ import java.util.List;
 
 public class Header {
 
-    private static final String CURRENCY_BUTTON_XPATH = "//*[@data-id='currency_selector']/a";
-    private static final String CURRENCY_VALUE_XPATH = "//*[@data-id='currency_selector']/input";
-    private static final String ALL_CURRENCIES_XPATH = "//*[@class='currency_list']/li";
-
-    private static final String LANGUAGE_SELECTOR_XPATH = "//*[@data-id='language_selector']/a";
-    private static final String ALL_LANGUAGES_XPATH = "//*[@class='language_flags']/li";
-
     private WebDriver driver;
 
-    @FindBy(xpath = CURRENCY_BUTTON_XPATH)
+    @FindBy(xpath = "//*[@data-id='currency_selector']/a")
     private WebElement currencyButton;
 
-    @FindBy(xpath = CURRENCY_VALUE_XPATH)
+    @FindBy(xpath = "//*[@data-id='currency_selector']/input")
     private WebElement currencyValue;
 
-    @FindBy(xpath = LANGUAGE_SELECTOR_XPATH)
+    @FindBy(xpath = "//*[@data-id='language_selector']/a")
     private WebElement languageButton;
 
-    private List<WebElement> allCurrencies;
+    @FindBy(xpath = "//*[@class='currency_list']/li")
+    private List<WebElement>  allCurrencies;
+
+    @FindBy(xpath = "//*[@class='language_flags']/li")
     private List<WebElement> allLanguages;
 
     public Header(WebDriver driver) {
@@ -54,7 +50,6 @@ public class Header {
     }
 
     private boolean setCurrency(String currencyName) {
-        allCurrencies = driver.findElements(By.xpath(ALL_CURRENCIES_XPATH));
         for (WebElement cur : allCurrencies) {
             if (currencyName.equalsIgnoreCase(cur.getAttribute("data-lang"))) {
                 waitAndClickHeaderButton(cur.findElement(By.tagName("a")));
@@ -65,7 +60,6 @@ public class Header {
     }
 
     private boolean setLanguage(String language) {
-        allLanguages = driver.findElements(By.xpath(ALL_LANGUAGES_XPATH));
         for (WebElement lang : allLanguages) {
             if (lang.getText().equalsIgnoreCase(language)) {
                 waitAndClickHeaderButton(lang.findElement(By.tagName("a")));

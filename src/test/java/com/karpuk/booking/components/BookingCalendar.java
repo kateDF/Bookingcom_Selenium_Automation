@@ -13,15 +13,10 @@ import java.util.Locale;
 
 public class BookingCalendar {
 
-    private static final String FURTHER_MONTH_XPATH = "//*[contains(@class,'c2-button-further')]";
     private static final String DAYS_XPATH = "//table[@class='c2-month-table']/descendant::th[contains(text(), '%s')]/ancestor::table/tbody//span";
-    private static final String MONTHS_XPATH = "//table[@class='c2-month-table']/descendant::th[contains(text(), '%s')]";
 
-    @FindBy(xpath = FURTHER_MONTH_XPATH)
+    @FindBy(xpath = "//*[contains(@class,'c2-button-further')]")
     private List<WebElement> furtherMonthLinks;
-
-    @FindBy(xpath = MONTHS_XPATH)
-    private List<WebElement> mothsAndYearTitle;
 
     private WebDriver driver;
 
