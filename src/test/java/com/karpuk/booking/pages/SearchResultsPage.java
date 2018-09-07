@@ -164,7 +164,7 @@ public class SearchResultsPage extends AbstractPage {
     }
 
     public void selectAvailabilityCheckbox() {
-        selectCheckbox(availabilityCheckbox);
+        waitAndClickCheckbox(availabilityCheckbox);
     }
 
     public boolean selectBudgetGroup(int budgetGroupNumber) {
