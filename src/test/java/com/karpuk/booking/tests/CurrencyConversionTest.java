@@ -20,23 +20,24 @@ public class CurrencyConversionTest extends BaseTest {
 
     @BeforeMethod
     public void setUpPreconditions() {
-        steps.openMainPage();
-        steps.setCurrency(CURRENCY_USD);
-        steps.setLanguage(LANGUAGE);
+        mainPageSteps.openMainPage();
+        mainPageSteps.setCurrency(CURRENCY_USD);
+        mainPageSteps.setLanguage(LANGUAGE);
         currencyExchangeClient = new CurrencyExchangeClient();
         logger.info("MainPage opened. Set currency and language");
     }
 
     @Test
     public void bookingUsdEuroConversionTest() {
-        steps.selectRegion(REGION);
-        steps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
-        steps.clickSearchButton();
+        mainPageSteps.selectRegion(REGION);
+        mainPageSteps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
+        mainPageSteps.selectGuestsInformation(1, 2, 1);
+        mainPageSteps.clickSearchButton();
         logger.info("Start searching...");
 
-        steps.selectOnlyAvailable();
-        int originalPriceInUsd = steps.getFirstResultPriceInUsd();
-        int actualPriceInEuro = steps.getFirstResultPriceInEuro();
+        searchPageSteps.selectOnlyAvailable();
+        int originalPriceInUsd = searchPageSteps.getFirstResultPriceInUsd();
+        int actualPriceInEuro = searchPageSteps.getFirstResultPriceInEuro();
         double rate = currencyExchangeClient.getRate(CURRENCY_USD, CURRENCY_EURO);
 
         double expectedPriceInEuro = originalPriceInUsd * rate;

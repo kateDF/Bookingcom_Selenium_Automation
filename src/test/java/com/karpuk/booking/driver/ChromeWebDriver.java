@@ -5,15 +5,15 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.concurrent.TimeUnit;
 
-public class ChromeDriverInit {
+public class ChromeWebDriver {
 
     private static final String WEBDRIVER_CHROME_DRIVER = "webdriver.chrome.driver";
     private static WebDriver driver;
 
-    private ChromeDriverInit() {
+    private ChromeWebDriver() {
     }
 
-    public static WebDriver getDriver() {
+    public static WebDriver getInstance() {
         if (driver == null) {
             if(System.getProperty(WEBDRIVER_CHROME_DRIVER) == null) {
                 System.setProperty(WEBDRIVER_CHROME_DRIVER, System.getenv(WEBDRIVER_CHROME_DRIVER));

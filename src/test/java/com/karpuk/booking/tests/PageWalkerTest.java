@@ -19,26 +19,26 @@ public class PageWalkerTest extends BaseTest {
 
     @BeforeMethod
     public void setUpPreconditions() {
-        steps.openMainPage();
-        steps.setCurrency(CURRENCY);
-        steps.setLanguage(LANGUAGE);
+        mainPageSteps.openMainPage();
+        mainPageSteps.setCurrency(CURRENCY);
+        mainPageSteps.setLanguage(LANGUAGE);
         logger.info("MainPage opened. Set currency and language");
     }
 
     @Test
     public void numberOfResultsInTitleEqualToActualInAllPages() {
-        steps.selectRegion(REGION);
-        steps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
-        steps.selectNumberOfChildren(NUMBER_OF_CHILDREN);
-        steps.clickSearchButton();
+        mainPageSteps.selectRegion(REGION);
+        mainPageSteps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
+        mainPageSteps.selectNumberOfChildren(NUMBER_OF_CHILDREN);
+        mainPageSteps.clickSearchButton();
         logger.info("Start searching...");
 
-        steps.selectOnlyAvailable();
+        searchPageSteps.selectOnlyAvailable();
         List<String> actualResultsHotels = new ArrayList<>();
         do {
-            actualResultsHotels.addAll(steps.getResultsHotelsNames());
-        } while (steps.clickNextResultsPageArrow());
-        int expectedNumberOfHotelsFromTitle = steps.getNumberOfSearchResults();
+            actualResultsHotels.addAll(searchPageSteps.getResultsHotelsNames());
+        } while (searchPageSteps.clickNextResultsPageArrow());
+        int expectedNumberOfHotelsFromTitle = searchPageSteps.getNumberOfSearchResults();
 
         Assert.assertEquals(actualResultsHotels.size(), expectedNumberOfHotelsFromTitle,
                 "Expected:" + expectedNumberOfHotelsFromTitle + ", Actual:" + actualResultsHotels.size());

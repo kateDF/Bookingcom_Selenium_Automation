@@ -17,24 +17,24 @@ public class ApartmentInformationTest extends BaseTest {
 
     @BeforeMethod
     public void open() {
-        steps.openMainPage();
-        steps.setCurrency(CURRENCY);
-        steps.setLanguage(LANGUAGE);
+        mainPageSteps.openMainPage();
+        mainPageSteps.setCurrency(CURRENCY);
+        mainPageSteps.setLanguage(LANGUAGE);
         logger.info("MainPage opened. Set currency and language");
     }
 
     @Test
     public void apartmentInformationFromDifferentPagesTest() {
-        steps.selectRegion(REGION);
-        steps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
-        steps.selectGuestsInformation(1, 2, 1);
-        steps.clickSearchButton();
+        mainPageSteps.selectRegion(REGION);
+        mainPageSteps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
+        mainPageSteps.selectGuestsInformation(1, 2, 1);
+        mainPageSteps.clickSearchButton();
         logger.info("Start searching...");
 
-        steps.selectOnlyAvailable();
-        Apartment expectedApartment = steps.getFirstResultApartmentFromSearchPage();
-        steps.openAndSwitchToFirstResultDetailsPage();
-        Apartment actualApartment = steps.getApartmentFromDetailsPage();
+        searchPageSteps.selectOnlyAvailable();
+        Apartment expectedApartment = searchPageSteps.getFirstResultApartmentFromSearchPage();
+        searchPageSteps.openAndSwitchToFirstResultDetailsPage();
+        Apartment actualApartment = apartmentPageSteps.getApartmentFromDetailsPage();
 
         Assert.assertEquals(expectedApartment.getName(), actualApartment.getName(),
                 "Expected name: " + expectedApartment.getName() + ". Actual name: " +  actualApartment.getName());

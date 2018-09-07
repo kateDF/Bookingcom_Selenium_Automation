@@ -17,24 +17,24 @@ public class MapNavigationTest extends BaseTest {
 
     @BeforeMethod
     public void open() {
-        steps.openMainPage();
-        steps.setCurrency(CURRENCY);
-        steps.setLanguage(LANGUAGE);
+        mainPageSteps.openMainPage();
+        mainPageSteps.setCurrency(CURRENCY);
+        mainPageSteps.setLanguage(LANGUAGE);
         logger.info("MainPage opened. Set currency and language");
     }
 
     @Test
     public void mapNavigationTest() {
-        steps.selectRegion(REGION);
-        steps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
-        steps.clickSearchButton();
+        mainPageSteps.selectRegion(REGION);
+        mainPageSteps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
+        mainPageSteps.clickSearchButton();
         logger.info("Start searching...");
 
-        steps.selectOnlyAvailable();
-        steps.openAndSwitchToFirstResultDetailsPage();
-        Apartment expectedApartment = steps.getApartmentFromDetailsPage();
-        steps.navigateToMapFromApartDetailsPage();
-        Apartment actualApartment = steps.getApartmentFromCurrentPositionOnMap();
+        searchPageSteps.selectOnlyAvailable();
+        searchPageSteps.openAndSwitchToFirstResultDetailsPage();
+        Apartment expectedApartment = apartmentPageSteps.getApartmentFromDetailsPage();
+        apartmentPageSteps.navigateToMapFromApartDetailsPage();
+        Apartment actualApartment = apartmentPageSteps.getApartmentFromCurrentPositionOnMap();
 
         Assert.assertTrue(actualApartment.getName().contains(expectedApartment.getName()) || expectedApartment.getName().contains(actualApartment.getName()),
                 "Expected name: " + expectedApartment.getName() + ". Actual name: " +  actualApartment.getName());

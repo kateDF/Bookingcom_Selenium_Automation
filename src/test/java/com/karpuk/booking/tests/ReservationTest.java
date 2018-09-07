@@ -20,31 +20,31 @@ public class ReservationTest extends BaseTest {
 
     @BeforeMethod
     public void open() {
-        steps.openMainPage();
-        steps.setCurrency(CURRENCY);
-        steps.setLanguage(LANGUAGE);
+        mainPageSteps.openMainPage();
+        mainPageSteps.setCurrency(CURRENCY);
+        mainPageSteps.setLanguage(LANGUAGE);
         logger.info("MainPage opened. Set currency and language");
     }
 
     @Test
     public void fillInReservationFormTest() {
-        steps.selectRegion(REGION);
-        steps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
-        steps.clickSearchButton();
+        mainPageSteps.selectRegion(REGION);
+        mainPageSteps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
+        mainPageSteps.clickSearchButton();
         logger.info("Start searching...");
 
-        steps.selectOnlyAvailable();
-        steps.selectFreeCancellation();
-        steps.openAndSwitchToFirstResultDetailsPage();
+        searchPageSteps.selectOnlyAvailable();
+        searchPageSteps.selectFreeCancellation();
+        searchPageSteps.openAndSwitchToFirstResultDetailsPage();
 
-        steps.selectRoomsInReservationTable(NUMBER_OF_ROOMS);
-        steps.clickReservationButton();
+        apartmentPageSteps.selectRoomsInReservationTable(NUMBER_OF_ROOMS);
+        apartmentPageSteps.clickReservationButton();
         logger.info("Start reservation...");
 
-        steps.fillInGuestInformation(EXPECTED_GUEST);
-        steps.clickNextSecureDetailsButton();
+        securePageSteps.fillInGuestInformation(EXPECTED_GUEST);
+        securePageSteps.clickNextSecureDetailsButton();
 
-        Guest actualGuestInfo = steps.getGuestInfoFromFinalDetailsSecure();
+        Guest actualGuestInfo = securePageSteps.getGuestInfoFromFinalDetailsSecure();
 
         Assert.assertEquals(actualGuestInfo.getFirstName(), EXPECTED_GUEST.getFirstName(),
                 "Expected First name: " + EXPECTED_GUEST.getFirstName() + ". Actual First name: " + actualGuestInfo.getFirstName());

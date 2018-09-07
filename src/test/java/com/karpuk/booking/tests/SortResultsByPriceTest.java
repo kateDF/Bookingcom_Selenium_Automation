@@ -19,27 +19,27 @@ public class SortResultsByPriceTest extends BaseTest {
 
     @BeforeMethod
     public void open() {
-        steps.openMainPage();
-        steps.setCurrency(CURRENCY);
-        steps.setLanguage(LANGUAGE);
+        mainPageSteps.openMainPage();
+        mainPageSteps.setCurrency(CURRENCY);
+        mainPageSteps.setLanguage(LANGUAGE);
         logger.info("MainPage opened. Set currency and language");
     }
 
     @Test
     public void sortedResultsByLowestUsdPriceFirst() {
-        steps.selectRegion(REGION);
-        steps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
-        steps.clickSearchButton();
+        mainPageSteps.selectRegion(REGION);
+        mainPageSteps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
+        mainPageSteps.clickSearchButton();
         logger.info("Start searching...");
 
-        steps.selectOnlyAvailable();
-        steps.selectStarRating(STAR_RATING);
+        searchPageSteps.selectOnlyAvailable();
+        searchPageSteps.selectStarRating(STAR_RATING);
 
-        steps.sortLowestUsdPriceFirst();
+        searchPageSteps.sortLowestUsdPriceFirst();
         List<Integer> pricesList = new ArrayList<>();
         do {
-            pricesList.addAll(steps.getResultsPricesInUsd());
-        } while (steps.clickNextResultsPageArrow());
+            pricesList.addAll(searchPageSteps.getResultsPricesInUsd());
+        } while (searchPageSteps.clickNextResultsPageArrow());
 
         for (int i = 0; i < pricesList.size() - 1; i++) {
             Assert.assertTrue(

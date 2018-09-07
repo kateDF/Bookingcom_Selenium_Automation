@@ -17,23 +17,23 @@ public class BookingWithBudgetTest extends BaseTest {
 
     @BeforeMethod
     public void setUpPreconditions() {
-        steps.openMainPage();
-        steps.setCurrency(CURRENCY);
-        steps.setLanguage(LANGUAGE);
+        mainPageSteps.openMainPage();
+        mainPageSteps.setCurrency(CURRENCY);
+        mainPageSteps.setLanguage(LANGUAGE);
         logger.info("MainPage opened. Set currency and language");
     }
 
     @Test
     public void availableBookingWithLowBudget() {
-        steps.selectRegion(REGION);
-        steps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
-        steps.clickSearchButton();
+        mainPageSteps.selectRegion(REGION);
+        mainPageSteps.selectDates(CHECKIN_DATE, CHECKOUT_DATE);
+        mainPageSteps.clickSearchButton();
         logger.info("Start searching...");
 
-        steps.selectOnlyAvailable();
-        int availableWithoutBudgetMark = steps.getNumberOfSearchResults();
-        steps.selectBudget(BUDGET_GROUP);
-        int availableWithBudgetMark = steps.getNumberOfSearchResults();
+        searchPageSteps.selectOnlyAvailable();
+        int availableWithoutBudgetMark = searchPageSteps.getNumberOfSearchResults();
+        searchPageSteps.selectBudget(BUDGET_GROUP);
+        int availableWithBudgetMark = searchPageSteps.getNumberOfSearchResults();
 
         Assert.assertTrue(availableWithBudgetMark <= availableWithoutBudgetMark,
                 "Number of results with selected budget: " + availableWithBudgetMark + " should not be more than " + availableWithoutBudgetMark);
