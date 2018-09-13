@@ -1,6 +1,6 @@
 package com.karpuk.booking.listener;
 
-import com.karpuk.booking.driver.ChromeWebDriver;
+import com.karpuk.booking.driver.DriverFactory;
 import com.karpuk.booking.service.CurrencyExchangeClient;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -26,7 +26,7 @@ public class ScreenshotListener extends TestListenerAdapter {
     public void onTestFailure(ITestResult result) {
         String methodName = result.getName();
         if (!result.isSuccess()) {
-            File scrFile = ((TakesScreenshot) ChromeWebDriver.getInstance()).getScreenshotAs(OutputType.FILE);
+            File scrFile = ((TakesScreenshot) DriverFactory.getInstance(DriverFactory.BrowserType.CHROME)).getScreenshotAs(OutputType.FILE);
             try {
                 String reportDirectory = new File(System.getProperty("user.dir")).getAbsolutePath() + "/target/surefire-reports";
                 File destFile = new File(reportDirectory + "/failure_screenshots/" + methodName + "_" + formatter.format(calendar.getTime()) + ".png");

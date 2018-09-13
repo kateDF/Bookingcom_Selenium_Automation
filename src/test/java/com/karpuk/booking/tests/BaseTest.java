@@ -1,6 +1,8 @@
 package com.karpuk.booking.tests;
 
-import com.karpuk.booking.driver.ChromeWebDriver;
+import static com.karpuk.booking.driver.DriverFactory.BrowserType;
+
+import com.karpuk.booking.driver.DriverFactory;
 import com.karpuk.booking.steps.*;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -17,15 +19,14 @@ public abstract class BaseTest {
 
     @BeforeClass
     public void setUpTest() {
-        WebDriver chromeDriver = ChromeWebDriver.getInstance();
+        WebDriver chromeDriver = DriverFactory.getInstance(BrowserType.CHROME);
         initSteps(chromeDriver);
-
         logger.info("Driver initialized");
     }
 
     @AfterClass
     public void closeDriver() {
-        ChromeWebDriver.closeDriver();
+        DriverFactory.closeDriver();
         logger.info("Driver closed");
     }
 
